@@ -7,7 +7,13 @@ const ErrorResponse = Flight.eventType(
     }
 );
 
-const UserQuery = Flight.eventType(
+const UserEvent = Flight.eventType(
+    function(user) {
+        this.user = user;
+    }
+);
+
+const UserQueryEvent = Flight.eventType(
     function(query) {
         this.query = query;
     }
@@ -19,7 +25,7 @@ const RepositoriesRequest = Flight.eventType(
     }
 );
 
-class ItemList extends Flight.Event {
+class ItemListEvent extends Flight.Event {
     constructor(items) {
         super();
         this._items = items;
@@ -33,12 +39,15 @@ class ItemList extends Flight.Event {
 const Events = {};
 
 Events.UserQuery = {};
-Events.UserQuery.Request = Flight.eventOfType(UserQuery).alias('UserQuery:Request');
-Events.UserQuery.Response = Flight.eventOfType(ItemList).alias('UserQuery:Response');
+Events.UserQuery.Request = Flight.eventOfType(UserQueryEvent).alias('UserQuery:Request');
+Events.UserQuery.Response = Flight.eventOfType(ItemListEvent).alias('UserQuery:Response');
 Events.UserQuery.Error = Flight.eventOfType(ErrorResponse).alias('UserQuery:Error');
+
+Events.User = {};
+Events.User.Chosen = Flight.eventOfType(UserEvent).alias('User:Chosen');
 
 Events.Repositories = {};
 Events.Repositories.Request = Flight.eventOfType(RepositoriesRequest).alias('Repositories:Request');
-Events.Repositories.Response = Flight.eventOfType(ItemList).alias('Repositories:Response');
+Events.Repositories.Response = Flight.eventOfType(ItemListEvent).alias('Repositories:Response');
 
 export default Events;

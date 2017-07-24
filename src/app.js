@@ -2,7 +2,10 @@ import Flight from 'flight';
 import NameSpace from 'namespace';
 import Events from 'events';
 import GitHubComponent from 'components/data/github';
+import FlowManagerComponent from 'components/ui/flow-manager';
 import UserSearchComponent from 'components/ui/user-search';
+import UserBadgeComponent from 'components/ui/user-badge';
+//require('./app.scss');
 
 // Debugger
 Flight.Debugger.showEvents = true;
@@ -14,23 +17,15 @@ Flight.app(() => {
     GitHubComponent.attachTo(NameSpace.GitHub);
 
     // ui components
-    UserSearchComponent.attachTo('#user-search');
+    FlowManagerComponent.attachTo('flow-manager');
+    UserSearchComponent.attachTo('user-search');
+    UserBadgeComponent.attachTo('user-badge');
 });
 
+// debugging
+window.Flight = Flight;
 NameSpace.GitHub.listen(
-    Events.UserQuery.Response, event => {
-        for(let item of event.items) {
-            console.log(item.login);
-        }
-    },
-
     Events.UserQuery.Error, event => {
         console.log(event);
     },
 );
-
-NameSpace.GitHub.trigger(new Events.UserQuery.Request('buzz'));
-
-
-// for debugging
-window.Flight = Flight;

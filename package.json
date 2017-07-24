@@ -18,8 +18,9 @@
   "homepage": "https://github.com/jsbuzz/github-repo-browser#readme",
   "devDependencies": {
     "babel-core": "^6.18.2",
-    "babel-loader": "^6.2.7",
+    "babel-loader": "^7.1.1",
     "babel-preset-es2015": "^6.18.0",
+    "extract-text-webpack-plugin": "^3.0.0",
     "html-loader": "^0.4.5",
     "jasmine": "^2.6.0",
     "jasmine-core": "^2.6.4",
@@ -30,10 +31,13 @@
     "karma-mocha": "^1.3.0",
     "karma-webpack": "^2.0.4",
     "mocha": "^3.4.2",
-    "webpack": "^1.13.3"
+    "node-sass": "^4.5.3",
+    "sass-loader": "^6.0.6",
+    "webpack": "^3.3.0"
   },
   "dependencies": {
     "PatchIt": "git+https://github.com/jsbuzz/PatchIt.git",
+    "debounce": "^1.0.2",
     "framework-concept": "git+https://github.com/jsbuzz/framework-concept.git",
     "jquery": "^3.2.1",
     "marked": "^0.3.6"

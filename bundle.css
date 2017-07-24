@@ -1,0 +1,91 @@
+flow-step {
+    display: none;
+    position: relative;
+}
+flow-step.active {
+    display: block;
+}
+
+section {
+    width: 400px;
+    margin: 40px auto;
+}
+
+.center {
+    text-align: center;
+}
+.center img {
+    border-radius: 10px;
+}
+
+#search-query {
+    margin-top: 10px;
+    text-align: center;
+    width: 240px;
+    border: none;
+    border-bottom: 2px dashed #333;
+    font-size: 16px;
+    font-family: monospace;
+}
+
+#search-query:focus {
+    outline:0;
+}
+
+#user-list {
+    width: 480px;
+    margin-top: 10px;
+}
+
+#user-list user-item {
+    float:left;
+    width: 200px;
+    cursor: pointer;
+    display: block;
+    padding: 10px;
+    border: 1px solid transparent;
+}
+
+#user-list user-item:hover {
+    border: 1px solid #999;
+    background-color: #dedede;
+    border-radius: 10px;
+}
+
+#user-list user-item .avatar {
+    height: 40px;
+    border-radius: 10px;
+    margin-right: 10px;
+}
+
+#user-list user-item:hover .avatar {
+    height: 50px;
+    margin: -5px;
+    margin-right: 10px;
+}
+
+#user-list user-item login {
+    font-size: 18px;
+    font-family: monospace;
+    vertical-align: 15px;
+}
+
+
+user-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 120px;
+}
+
+user-badge img {
+    border-radius: 10px;
+    width: 120px;
+}
+
+user-badge user-name {
+    display: block;
+    text-align: center;
+    font-size: 18px;
+    font-family: monospace;
+}

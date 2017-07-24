@@ -3,39 +3,33 @@
 	<head>
 		<meta charset="utf-8">
 		<title>3Flight • GitHub demo</title>
-        <style type="text/css">
-			#user-search {
-				width: 400px;
-				margin: 40px auto;
-			}
-
-			.center {
-				text-align: center;
-			}
-
-			#search-query {
-				margin-top: 10px;
-				text-align: center;
-				width: 240px;
-				border: none;
-				border-bottom: 2px dashed #333;
-				font-size: 16px;
-				font-family: monospace;
-			}
-
-			#search-query:focus {
-				outline:0;
-			}
-        </style>
+    	<link rel="stylesheet" media="all" href="bundle.css">
 	</head>
 	<body>
-		<section id="user-search">
-			<div class="center">
-				<img src="bin/unknown.jpg"/>
-				<input type="text" id="search-query" />
-			</div>
-			<ul id="user-list"></ul>
-        </section>
-        <script src="bundle.js"></script>
+		<flow-manager>
+			<flow-step id="step-user">
+				<section>
+					<user-search>
+						<div class="center">
+							<img src="bin/unknown.jpg"/>
+							<input type="text" id="search-query" />
+						</div>
+						<div id="user-list"></div>
+			    	</user-search>
+				</section>
+			</flow-step>
+			<flow-step id="step-repository">
+				<user-badge>
+					<img src="bin/unknown.jpg"/>
+					<user-name></user-name>
+				</user-badge>
+				<section>
+					<repository-list>
+						loading repositories...
+					</repository-list>
+				</section>
+			</flow-step>
+		</flow-manager>
+    	<script src="bundle.js"></script>
 	</body>
 </html>

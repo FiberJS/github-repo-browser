@@ -1,3 +1,4 @@
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var path = require('path');
 var fs = require('fs');
 
@@ -12,22 +13,27 @@ module.exports = {
         {
           test: /\.js$/,
           exclude: /(node_modules|bower_components)/,
-          loader: 'babel?presets[]=es2015'
+          loader: 'babel-loader?presets[]=es2015'
         },
         {
           test: /\.js$/,
           include: /node_modules\/framework-concept/,
-          loader: 'babel?presets[]=es2015'
+          loader: 'babel-loader?presets[]=es2015'
         },
         {
           test: /\.js$/,
           include: /node_modules\/PatchIt/,
-          loader: 'babel?presets[]=es2015'
+          loader: 'babel-loader?presets[]=es2015'
         },
         {
-            test: /\.html$/,
-            loader: 'html',
-            exclude: /node_modules/
+          test: /\.html$/,
+          loader: 'html-loader',
+          exclude: /node_modules/
+        },
+        {
+          test: /\.scss$/,
+          exclude: /(node_modules|bower_components)/,
+          loader: ExtractTextPlugin.extract('sass-loader')
         }
     ]
   },
@@ -35,20 +41,22 @@ module.exports = {
         fs: "empty" // avoids error messages
     },
   resolve: {
-    root: path.resolve(__dirname),
-    extensions: ['', '.js', '.html'],
+    extensions: ['.scss', '.js', '.html'],
     alias: {
-      flight: 'node_modules/framework-concept/flight',
-      PatchIt: 'node_modules/PatchIt',
-      components: 'src/components',
-      domain: 'src/domain',
-      events: 'src/events',
-      namespace: 'src/namespace',
-      repositories: 'src/repositories',
+      flight: path.resolve(__dirname, 'node_modules/framework-concept/flight'),
+      PatchIt: path.resolve(__dirname, 'node_modules/PatchIt'),
+      components: path.resolve(__dirname, 'src/components'),
+      domain: path.resolve(__dirname, 'src/domain'),
+      events: path.resolve(__dirname, 'src/events'),
+      namespace: path.resolve(__dirname, 'src/namespace'),
+      repositories: path.resolve(__dirname, 'src/repositories'),
     }
   },
   externals: [
   ],
   plugins: [
+    new ExtractTextPlugin('bundle.css', {
+        allChunks: true
+    })
   ],
 };

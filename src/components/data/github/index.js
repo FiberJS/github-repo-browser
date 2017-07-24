@@ -16,7 +16,7 @@ class GitHubComponent extends Flight.DataComponent {
     queryUsers(query) {
         jquery.getJSON(
             GITHUB_SEARCH_URL,
-            { q: query}
+            { q: query }
         ).done((response) => {
             this.on(NameSpace.GitHub).trigger(
                 new Events.UserQuery.Response(response.items)
