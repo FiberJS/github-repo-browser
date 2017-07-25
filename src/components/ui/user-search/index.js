@@ -12,11 +12,11 @@ class UserSearchComponent extends Flight.UIComponent {
 
     listen() {
         this.$searchBar = $('#search-query');
-        this.$userList = $('#user-list');
+        this.$userList = $('user-list', this.view);
         const debouncedKeyPress = debounce(()=>this.onKeyPress(), 400);
 
         this.on(NameSpace.System).listen(
-          Flight.System.Ready, event => this.$searchBar.focus(),
+            Flight.System.Ready, event => this.$searchBar.focus(),
         );
         this.on(NameSpace.GitHub).listen(
             Events.UserQuery.Response, event => this.showUsers(event.items),

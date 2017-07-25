@@ -36,6 +36,13 @@ class ItemListEvent extends Flight.Event {
     }
 }
 
+const FlowEvent = Flight.eventType(
+    function(step) {
+        this.step = step;
+    }
+);
+
+
 const Events = {};
 
 Events.UserQuery = {};
@@ -49,5 +56,8 @@ Events.User.Chosen = Flight.eventOfType(UserEvent).alias('User:Chosen');
 Events.Repositories = {};
 Events.Repositories.Request = Flight.eventOfType(RepositoriesRequest).alias('Repositories:Request');
 Events.Repositories.Response = Flight.eventOfType(ItemListEvent).alias('Repositories:Response');
+
+Events.Flow = {};
+Events.Flow.ShowStep = Flight.eventOfType(FlowEvent).alias('Flow:ShowStep');
 
 export default Events;

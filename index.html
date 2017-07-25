@@ -8,26 +8,30 @@
 	<body>
 		<flow-manager>
 			<flow-step id="step-user">
-				<section>
-					<user-search>
+				<user-search>
+					<aside>
 						<div class="center">
 							<img src="bin/unknown.jpg"/>
-							<input type="text" id="search-query" />
+							@<input type="text" id="search-query" />
 						</div>
-						<div id="user-list"></div>
-			    	</user-search>
-				</section>
+					</aside>
+					<main>
+						<user-list></user-list>
+					</main>
+				</user-search>
 			</flow-step>
 			<flow-step id="step-repository">
-				<user-badge>
-					<img src="bin/unknown.jpg"/>
-					<user-name></user-name>
-				</user-badge>
-				<section>
+				<aside>
+					<user-badge id="selected-user" title="back to users">
+						<img src="bin/unknown.jpg"/>
+						<user-name></user-name>
+					</user-badge>
+				</aside>
+				<main>
 					<repository-list>
 						loading repositories...
 					</repository-list>
-				</section>
+				</main>
 			</flow-step>
 		</flow-manager>
     	<script src="bundle.js"></script>

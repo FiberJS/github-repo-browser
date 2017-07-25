@@ -1,27 +1,43 @@
+body {
+    font-family: monospace;
+}
+
 flow-step {
     display: none;
-    position: relative;
 }
 flow-step.active {
     display: block;
 }
 
-section {
-    width: 400px;
-    margin: 40px auto;
+aside {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 140px;
+    padding: 40px 10px;
+    box-sizing: border-box;
+}
+
+main {
+    position: relative;
+    margin-left: 150px;
+    padding-left: 40px;
+    margin-bottom: 40px;
 }
 
 .center {
     text-align: center;
 }
-.center img {
+
+user-search img {
+    width: 120px;
     border-radius: 10px;
 }
 
 #search-query {
     margin-top: 10px;
-    text-align: center;
-    width: 240px;
+    width: 100px;
     border: none;
     border-bottom: 2px dashed #333;
     font-size: 16px;
@@ -32,12 +48,12 @@ section {
     outline:0;
 }
 
-#user-list {
-    width: 480px;
+user-list {
+    display: block;
     margin-top: 10px;
 }
 
-#user-list user-item {
+user-list user-item {
     float:left;
     width: 200px;
     cursor: pointer;
@@ -46,36 +62,33 @@ section {
     border: 1px solid transparent;
 }
 
-#user-list user-item:hover {
+user-list user-item:hover {
     border: 1px solid #999;
     background-color: #dedede;
     border-radius: 10px;
 }
 
-#user-list user-item .avatar {
+user-list user-item .avatar {
+    width: 40px;
     height: 40px;
     border-radius: 10px;
     margin-right: 10px;
 }
 
-#user-list user-item:hover .avatar {
+user-list user-item:hover .avatar {
+    width: 50px;
     height: 50px;
     margin: -5px;
     margin-right: 10px;
 }
 
-#user-list user-item login {
-    font-size: 18px;
-    font-family: monospace;
+user-list user-item login {
+    font-size: 16px;
     vertical-align: 15px;
 }
 
-
 user-badge {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    width: 120px;
+    cursor: pointer;
 }
 
 user-badge img {
@@ -87,5 +100,64 @@ user-badge user-name {
     display: block;
     text-align: center;
     font-size: 18px;
-    font-family: monospace;
 }
+
+repository-list {
+    display: block;
+}
+repository-list.loading {
+    background-image: url('bin/octocat-spinner.gif');
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 220px;
+}
+
+repository-item {
+    cursor: pointer;
+    display: block;
+    border: 1px solid #dedede;
+    padding: 10px;
+    border-radius: 10px;
+    float: left;
+    width: 240px;
+    box-sizing: border-box;
+    margin: 5px;
+    overflow: hidden;
+    position: relative;
+}
+
+repository-item.forked {
+    border: 1px solid #999;
+    background: #dedede;
+}
+repository-item.forked fork {
+    display: inline-block;
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    width: 32px;
+    height: 32px;
+    background: url('bin/fork.png');
+    background-size: contain;
+}
+
+repository-item p {
+    font-size: 12px;
+    overflow: hidden;
+    display: block;
+    height: 30px;
+}
+
+language {
+    color: white;
+    display: inline-block;
+    padding: 4px;
+    background: #999;
+    border-radius: 5px;
+}
+language.javascript { background: coral; }
+language.java, language.scala { background: red; }
+language.html { background: orange; }
+language.python, language.php, language.lua { background: navy; }
+language.cpp, language.c { background: black; }
+language.typescript, language.coffeescript, language.groovy { background: magenta; }

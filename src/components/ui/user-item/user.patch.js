@@ -13,7 +13,7 @@ export default userPatch;
 
 function shortened(str) {
     return str.length > 13
-        ? str.substr(0, 10) + '...'
+        ? str.substr(0, 10) + '..'
         : str
         ;
 }

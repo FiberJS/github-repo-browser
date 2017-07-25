@@ -23,6 +23,9 @@ class FlowManagerComponent extends Flight.UIComponent {
         this.on(NameSpace.GitHub).listen(
             Events.User.Chosen, event => this.moveTo('repository'),
         );
+        this.ui(this.view).listen(
+            Events.Flow.ShowStep, event => this.moveTo(event.step),
+        );
         window.onpopstate = (event) => this.moveTo(event.state);
     }
 

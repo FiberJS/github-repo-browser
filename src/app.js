@@ -5,6 +5,7 @@ import GitHubComponent from 'components/data/github';
 import FlowManagerComponent from 'components/ui/flow-manager';
 import UserSearchComponent from 'components/ui/user-search';
 import UserBadgeComponent from 'components/ui/user-badge';
+import RepositoryListComponent from 'components/ui/repository-list';
 //require('./app.scss');
 
 // Debugger
@@ -20,6 +21,7 @@ Flight.app(() => {
     FlowManagerComponent.attachTo('flow-manager');
     UserSearchComponent.attachTo('user-search');
     UserBadgeComponent.attachTo('user-badge');
+    RepositoryListComponent.attachTo('repository-list');
 });
 
 // debugging
