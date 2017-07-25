@@ -3,7 +3,6 @@ import NameSpace from 'namespace';
 import RepositoryItemComponent from 'components/ui/repository-item';
 import Events from 'events';
 
-const LOADING_TEXT = "Loading repositories...";
 const EMPTY_TEXT = "No repositories :(";
 
 class RepositoryListComponent extends Flight.UIComponent {
@@ -18,7 +17,7 @@ class RepositoryListComponent extends Flight.UIComponent {
     }
 
     requestRepositories(user) {
-        this.clearItems(LOADING_TEXT);
+        this.clearItems();
         this.view.className = 'loading';
         this.on(NameSpace.GitHub).trigger(
             new Events.Repositories.Request(user)

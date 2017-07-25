@@ -12194,7 +12194,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var LOADING_TEXT = "Loading repositories...";
 var EMPTY_TEXT = "No repositories :(";
 
 var RepositoryListComponent = function (_Flight$UIComponent) {
@@ -12221,7 +12220,7 @@ var RepositoryListComponent = function (_Flight$UIComponent) {
     }, {
         key: 'requestRepositories',
         value: function requestRepositories(user) {
-            this.clearItems(LOADING_TEXT);
+            this.clearItems();
             this.view.className = 'loading';
             this.on(_namespace2.default.GitHub).trigger(new _events2.default.Repositories.Request(user));
         }

@@ -21,8 +21,9 @@ aside {
 
 main {
     position: relative;
-    margin-left: 150px;
     padding-left: 40px;
+    margin-top: 40px;
+    margin-left: 150px;
     margin-bottom: 40px;
 }
 
@@ -36,10 +37,10 @@ user-search img {
 }
 
 #search-query {
-    margin-top: 10px;
     width: 100px;
     border: none;
-    border-bottom: 2px dashed #333;
+    border-bottom: 1px solid #ddd;
+    border-bottom-right-radius: 10px;
     font-size: 16px;
     font-family: monospace;
 }
@@ -91,9 +92,16 @@ user-badge {
     cursor: pointer;
 }
 
+user-badge .back-link:hover {
+    background-image: url('bin/arrow-back.png');
+}
+
 user-badge img {
     border-radius: 10px;
     width: 120px;
+}
+user-badge img:hover {
+    opacity: 0.2;
 }
 
 user-badge user-name {
@@ -109,7 +117,7 @@ repository-list.loading {
     background-image: url('bin/octocat-spinner.gif');
     background-position: center;
     background-repeat: no-repeat;
-    height: 220px;
+    height: 300px;
 }
 
 repository-item {
@@ -121,13 +129,13 @@ repository-item {
     float: left;
     width: 240px;
     box-sizing: border-box;
-    margin: 5px;
+    margin: 0 10px 10px 0;
     overflow: hidden;
     position: relative;
 }
 
 repository-item.forked {
-    border: 1px solid #999;
+    border: 1px solid #ccc;
     background: #dedede;
 }
 repository-item.forked fork {
@@ -139,6 +147,9 @@ repository-item.forked fork {
     height: 32px;
     background: url('bin/fork.png');
     background-size: contain;
+}
+repository-item:hover {
+    border-color: black;
 }
 
 repository-item p {
