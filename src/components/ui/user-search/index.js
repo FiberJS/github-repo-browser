@@ -4,6 +4,7 @@ import UserItemComponent from 'components/ui/user-item';
 import Events from 'events';
 import jquery from 'jquery';
 import debounce from 'debounce';
+import template from './user-search.html';
 const $ = jquery;
 
 const ENTER = 13;
@@ -11,6 +12,8 @@ const ENTER = 13;
 class UserSearchComponent extends Flight.UIComponent {
 
     listen() {
+        this.renderTemplate();
+
         this.$searchBar = $('#search-query');
         this.$userList = $('user-list', this.view);
         const debouncedKeyPress = debounce(()=>this.onKeyPress(), 400);
@@ -22,8 +25,14 @@ class UserSearchComponent extends Flight.UIComponent {
             Events.UserQuery.Response, event => this.showUsers(event.items),
         );
         this.ui('#search-query').listen(
-            'keyup', event => debouncedKeyPress(),
+            'keyup change paste', event => debouncedKeyPress(),
         );
+
+        this.onKeyPress();
+    }
+
+    renderTemplate() {
+        this.view.innerHTML = template;
     }
 
     clearUsers() {

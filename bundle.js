@@ -322,12 +322,16 @@ var EventPool = exports.EventPool = function () {
     }, {
         key: 'addEventListener',
         value: function addEventListener(flightEvent, eventHandler) {
+            var _this = this;
+
             var realHandler = void 0;
             if (typeof flightEvent == 'string') {
                 realHandler = function realHandler(event) {
                     return eventHandler(event);
                 };
-                this.element.addEventListener(flightEvent, realHandler);
+                flightEvent.trim().split(/\s/).forEach(function (strEvent) {
+                    _this.element.addEventListener(strEvent, realHandler);
+                });
             } else {
                 realHandler = function realHandler(event) {
                     return eventHandler(event.detail);
@@ -372,13 +376,13 @@ var DataEventPool = exports.DataEventPool = function (_EventPool) {
     function DataEventPool(name, path) {
         _classCallCheck(this, DataEventPool);
 
-        var _this = _possibleConstructorReturn(this, (DataEventPool.__proto__ || Object.getPrototypeOf(DataEventPool)).call(this));
+        var _this2 = _possibleConstructorReturn(this, (DataEventPool.__proto__ || Object.getPrototypeOf(DataEventPool)).call(this));
 
-        _this.name = name;
-        _this.path = path;
-        _this.element = _this.createElement(name);
-        _this.children = {};
-        return _this;
+        _this2.name = name;
+        _this2.path = path;
+        _this2.element = _this2.createElement(name);
+        _this2.children = {};
+        return _this2;
     }
 
     _createClass(DataEventPool, [{
@@ -11330,11 +11334,11 @@ var _userSearch = __webpack_require__(15);
 
 var _userSearch2 = _interopRequireDefault(_userSearch);
 
-var _userBadge = __webpack_require__(20);
+var _userBadge = __webpack_require__(21);
 
 var _userBadge2 = _interopRequireDefault(_userBadge);
 
-var _repositoryList = __webpack_require__(21);
+var _repositoryList = __webpack_require__(22);
 
 var _repositoryList2 = _interopRequireDefault(_repositoryList);
 
@@ -11736,8 +11740,10 @@ var FlowManagerComponent = function (_Flight$UIComponent) {
             this.ui(this.view).listen(_events2.default.Flow.ShowStep, function (event) {
                 return _this2.moveTo(event.step);
             });
+
             window.onpopstate = function (event) {
-                return _this2.moveTo(event.state);
+                _this2.hideSteps();
+                _this2.showStep(event.state || _this2.steps[0]);
             };
         }
     }, {
@@ -11748,7 +11754,6 @@ var FlowManagerComponent = function (_Flight$UIComponent) {
     }, {
         key: 'showStep',
         value: function showStep(step) {
-            history.pushState(step, step, this.rootUrl + '#' + step);
             $('flow-step#step-' + step, this.view).addClass('active');
         }
     }, {
@@ -11762,6 +11767,7 @@ var FlowManagerComponent = function (_Flight$UIComponent) {
         value: function moveTo(step) {
             this.hideSteps();
             this.showStep(step);
+            history.pushState(step, step, this.rootUrl + '#' + step);
         }
     }]);
 
@@ -11807,6 +11813,10 @@ var _debounce = __webpack_require__(19);
 
 var _debounce2 = _interopRequireDefault(_debounce);
 
+var _userSearch = __webpack_require__(20);
+
+var _userSearch2 = _interopRequireDefault(_userSearch);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -11833,6 +11843,8 @@ var UserSearchComponent = function (_Flight$UIComponent) {
         value: function listen() {
             var _this2 = this;
 
+            this.renderTemplate();
+
             this.$searchBar = $('#search-query');
             this.$userList = $('user-list', this.view);
             var debouncedKeyPress = (0, _debounce2.default)(function () {
@@ -11845,9 +11857,16 @@ var UserSearchComponent = function (_Flight$UIComponent) {
             this.on(_namespace2.default.GitHub).listen(_events2.default.UserQuery.Response, function (event) {
                 return _this2.showUsers(event.items);
             });
-            this.ui('#search-query').listen('keyup', function (event) {
+            this.ui('#search-query').listen('keyup change paste', function (event) {
                 return debouncedKeyPress();
             });
+
+            this.onKeyPress();
+        }
+    }, {
+        key: 'renderTemplate',
+        value: function renderTemplate() {
+            this.view.innerHTML = _userSearch2.default;
         }
     }, {
         key: 'clearUsers',
@@ -12080,6 +12099,12 @@ module.exports = function debounce(func, wait, immediate){
 
 /***/ }),
 /* 20 */
+/***/ (function(module, exports) {
+
+module.exports = "<aside>\n    <img src=\"bin/unknown.jpg\"/>\n    <big>@</big><input type=\"text\" id=\"search-query\" />\n</aside>\n<main>\n    <user-list></user-list>\n</main>\n";
+
+/***/ }),
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12107,6 +12132,10 @@ var _jquery = __webpack_require__(4);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
+var _userBadge = __webpack_require__(27);
+
+var _userBadge2 = _interopRequireDefault(_userBadge);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -12131,6 +12160,8 @@ var UserBadgeComponent = function (_Flight$UIComponent) {
         value: function listen() {
             var _this2 = this;
 
+            this.renderTemplate();
+
             this.on(_namespace2.default.GitHub).listen(_events2.default.User.Chosen, function (event) {
                 return _this2.loadUser(event.user);
             });
@@ -12138,6 +12169,11 @@ var UserBadgeComponent = function (_Flight$UIComponent) {
             this.ui(this.view).listen('click', function (event) {
                 return _this2.showUsers();
             });
+        }
+    }, {
+        key: 'renderTemplate',
+        value: function renderTemplate() {
+            this.view.innerHTML = _userBadge2.default;
         }
     }, {
         key: 'loadUser',
@@ -12158,7 +12194,7 @@ var UserBadgeComponent = function (_Flight$UIComponent) {
 exports.default = UserBadgeComponent;
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12178,7 +12214,7 @@ var _namespace = __webpack_require__(1);
 
 var _namespace2 = _interopRequireDefault(_namespace);
 
-var _repositoryItem = __webpack_require__(22);
+var _repositoryItem = __webpack_require__(23);
 
 var _repositoryItem2 = _interopRequireDefault(_repositoryItem);
 
@@ -12269,7 +12305,7 @@ var RepositoryListComponent = function (_Flight$UIComponent) {
 exports.default = RepositoryListComponent;
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12293,15 +12329,15 @@ var _events = __webpack_require__(2);
 
 var _events2 = _interopRequireDefault(_events);
 
-var _repository = __webpack_require__(23);
+var _repository = __webpack_require__(24);
 
 var _repository2 = _interopRequireDefault(_repository);
 
-var _repository3 = __webpack_require__(24);
+var _repository3 = __webpack_require__(25);
 
 var _repository4 = _interopRequireDefault(_repository3);
 
-var _repository5 = __webpack_require__(25);
+var _repository5 = __webpack_require__(26);
 
 var _repository6 = _interopRequireDefault(_repository5);
 
@@ -12358,7 +12394,7 @@ var RepositoryItemComponent = function (_Flight$UIComponent) {
 exports.default = RepositoryItemComponent;
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12383,13 +12419,13 @@ var Repository = function Repository(repo) {
 exports.default = Repository;
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports) {
 
 module.exports = "<repository-item>\n    <strong var=\"name\"></strong>\n    <p var=\"description\"></p>\n    <fork title=\"forked repository\"></fork>\n    <language var=\"language\"></language>\n</repository-item>\n";
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12417,6 +12453,12 @@ exports.default = repositoryPatch;
 function classNameFor(language) {
     return language.toLowerCase().replace(/[\+]/g, 'p').replace(/[^a-z]/g, '');
 }
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"back-link\" title=\"back to users\">\n    <img src=\"bin/unknown.jpg\"/>\n</div>\n<user-name></user-name>\n";
 
 /***/ })
 /******/ ]);

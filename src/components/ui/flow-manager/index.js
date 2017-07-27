@@ -26,7 +26,11 @@ class FlowManagerComponent extends Flight.UIComponent {
         this.ui(this.view).listen(
             Events.Flow.ShowStep, event => this.moveTo(event.step),
         );
-        window.onpopstate = (event) => this.moveTo(event.state);
+
+        window.onpopstate = (event) => {
+            this.hideSteps();
+            this.showStep(event.state || this.steps[0]);
+        };
     }
 
     hideSteps() {
@@ -34,7 +38,6 @@ class FlowManagerComponent extends Flight.UIComponent {
     }
 
     showStep(step) {
-        history.pushState(step, step, `${this.rootUrl}#${step}`);
         $(`flow-step#step-${step}`, this.view).addClass('active');
     }
 
@@ -46,6 +49,7 @@ class FlowManagerComponent extends Flight.UIComponent {
     moveTo(step) {
         this.hideSteps();
         this.showStep(step);
+        history.pushState(step, step, `${this.rootUrl}#${step}`);
     }
 }
 

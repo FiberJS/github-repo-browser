@@ -27,7 +27,7 @@ module.exports = {
         },
         {
           test: /\.html$/,
-          loader: 'html-loader',
+          loader: 'html-loader?attrs=false',
           exclude: /node_modules/
         },
         {

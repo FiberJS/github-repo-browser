@@ -8,31 +8,14 @@
 	<body>
 		<flow-manager>
 			<flow-step id="step-user">
-				<user-search>
-					<aside>
-						<div class="center">
-							<img src="bin/unknown.jpg"/>
-							<big>@</big><input type="text" id="search-query" />
-						</div>
-					</aside>
-					<main>
-						<user-list></user-list>
-					</main>
-				</user-search>
+				<user-search></user-search>
 			</flow-step>
 			<flow-step id="step-repository">
 				<aside>
-					<user-badge id="selected-user" title="back to users">
-						<div class="back-link">
-							<img src="bin/unknown.jpg"/>
-						</div>
-						<user-name></user-name>
-					</user-badge>
+					<user-badge></user-badge>
 				</aside>
 				<main>
-					<repository-list>
-						loading repositories...
-					</repository-list>
+					<repository-list></repository-list>
 				</main>
 			</flow-step>
 		</flow-manager>
