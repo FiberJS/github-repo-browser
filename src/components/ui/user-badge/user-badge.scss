@@ -1,0 +1,21 @@
+user-badge {
+    cursor: pointer;
+}
+
+user-badge .back-link:hover {
+    background-image: url('/bin/arrow-back.png');
+}
+
+user-badge img {
+    border-radius: 10px;
+    width: 120px;
+}
+user-badge img:hover {
+    opacity: 0.2;
+}
+
+user-badge user-name {
+    display: block;
+    text-align: center;
+    font-size: 18px;
+}

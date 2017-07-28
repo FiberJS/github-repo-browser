@@ -1,0 +1,38 @@
+repository-item {
+    cursor: pointer;
+    display: block;
+    border: 1px solid #dedede;
+    padding: 10px;
+    border-radius: 10px;
+    float: left;
+    width: 240px;
+    box-sizing: border-box;
+    margin: 0 10px 10px 0;
+    overflow: hidden;
+    position: relative;
+}
+
+repository-item.forked {
+    border: 1px solid #ccc;
+    background: #dedede;
+}
+repository-item.forked fork {
+    display: inline-block;
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    width: 32px;
+    height: 32px;
+    background: url('/bin/fork.png');
+    background-size: contain;
+}
+repository-item:hover {
+    border-color: black;
+}
+
+repository-item p {
+    font-size: 12px;
+    overflow: hidden;
+    display: block;
+    height: 30px;
+}

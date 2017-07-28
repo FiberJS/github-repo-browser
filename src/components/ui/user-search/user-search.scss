@@ -1,0 +1,22 @@
+user-search img {
+    width: 120px;
+    border-radius: 10px;
+}
+
+#search-query {
+    width: 100px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    border-bottom-right-radius: 10px;
+    font-size: 16px;
+    font-family: monospace;
+}
+
+#search-query:focus {
+    outline:0;
+}
+
+user-list {
+    display: block;
+    margin-top: 10px;
+}

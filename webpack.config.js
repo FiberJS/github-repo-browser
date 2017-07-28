@@ -1,4 +1,7 @@
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const extractSass = new ExtractTextPlugin({
+    filename: "bundle.css"
+});
 var path = require('path');
 var fs = require('fs');
 
@@ -31,9 +34,14 @@ module.exports = {
           exclude: /node_modules/
         },
         {
-          test: /\.scss$/,
-          exclude: /(node_modules|bower_components)/,
-          loader: ExtractTextPlugin.extract('sass-loader')
+            test: /\.scss$/,
+            use: extractSass.extract({
+                use: [{
+                    loader: "css-loader?attrs=false"
+                }, {
+                    loader: "sass-loader?attrs=false"
+                }],
+            })
         }
     ]
   },
@@ -55,8 +63,6 @@ module.exports = {
   externals: [
   ],
   plugins: [
-    new ExtractTextPlugin('bundle.css', {
-        allChunks: true
-    })
+    extractSass
   ],
 };

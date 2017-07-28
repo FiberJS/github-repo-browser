@@ -1,0 +1,33 @@
+user-list user-item {
+    float:left;
+    width: 200px;
+    cursor: pointer;
+    display: block;
+    padding: 10px;
+    border: 1px solid transparent;
+}
+
+user-list user-item:hover {
+    border: 1px solid #999;
+    background-color: #dedede;
+    border-radius: 10px;
+}
+
+user-list user-item .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    margin-right: 10px;
+}
+
+user-list user-item:hover .avatar {
+    width: 50px;
+    height: 50px;
+    margin: -5px;
+    margin-right: 10px;
+}
+
+user-list user-item login {
+    font-size: 16px;
+    vertical-align: 15px;
+}

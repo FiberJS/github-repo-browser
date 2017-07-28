@@ -57,6 +57,9 @@ Events.Repositories = {};
 Events.Repositories.Request = Flight.eventOfType(RepositoriesRequest).alias('Repositories:Request');
 Events.Repositories.Response = Flight.eventOfType(ItemListEvent).alias('Repositories:Response');
 
+// Events.Repository = {};
+// Events.Repository.Chosen = Flight.eventOfType(RepositoryEvent).alias('Repository:Chosen');
+
 Events.Flow = {};
 Events.Flow.ShowStep = Flight.eventOfType(FlowEvent).alias('Flow:ShowStep');
 

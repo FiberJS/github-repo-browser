@@ -2,6 +2,7 @@ import Flight from 'flight';
 import NameSpace from 'namespace';
 import RepositoryItemComponent from 'components/ui/repository-item';
 import Events from 'events';
+import styles from './repository-list.scss';
 
 const EMPTY_TEXT = "No repositories :(";
 

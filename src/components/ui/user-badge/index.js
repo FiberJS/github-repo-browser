@@ -3,6 +3,7 @@ import NameSpace from 'namespace';
 import Events from 'events';
 import jquery from 'jquery';
 import template from './user-badge.html';
+import styles from './user-badge.scss';
 const $ = jquery;
 
 

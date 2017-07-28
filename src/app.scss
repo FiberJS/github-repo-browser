@@ -1,57 +1,43 @@
-#user-search {
-  width: 400px;
-  margin: 40px auto;
+body {
+    font-family: monospace;
 }
 
-.center {
-  text-align: center;
+flow-step {
+    display: none;
 }
-.center img {
-  border-radius: 10px;
-}
-
-#search-query {
-  margin-top: 10px;
-  text-align: center;
-  width: 240px;
-  border: none;
-  border-bottom: 2px dashed #333;
-  font-size: 16px;
-  font-family: monospace;
-
-  &:focus {
-    outline:0;
-  }
-}
-
-#user-list {
-  width: 480px;
-  margin-top: 10px;
-
-  user-item {
-    float:left;
-    width: 200px;
-    cursor: pointer;
+flow-step.active {
     display: block;
-    padding: 10px;
-    border: 1px solid transparent;
-
-    &:hover {
-      border: 1px solid #999;
-      background-color: #dedede;
-      border-radius: 10px;
-    }
-
-    .avatar {
-      height: 40px;
-      border-radius: 10px;
-      margin-right: 10px;
-    }
-
-    login {
-      font-size: 18px;
-      font-family: monospace;
-      vertical-align: 15px;
-    }
-  }
 }
+
+aside {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 140px;
+    padding: 40px 10px;
+    box-sizing: border-box;
+}
+
+main {
+    position: relative;
+    padding-left: 40px;
+    margin-top: 40px;
+    margin-left: 150px;
+    margin-bottom: 40px;
+}
+
+
+language {
+    color: white;
+    display: inline-block;
+    padding: 4px;
+    background: #999;
+    border-radius: 5px;
+}
+language.javascript { background: coral; }
+language.java, language.scala { background: red; }
+language.html { background: orange; }
+language.python, language.php, language.lua { background: navy; }
+language.cpp, language.c { background: black; }
+language.typescript, language.coffeescript, language.groovy { background: magenta; }

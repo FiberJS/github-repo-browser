@@ -6,7 +6,7 @@ import FlowManagerComponent from 'components/ui/flow-manager';
 import UserSearchComponent from 'components/ui/user-search';
 import UserBadgeComponent from 'components/ui/user-badge';
 import RepositoryListComponent from 'components/ui/repository-list';
-//require('./app.scss');
+require('./app.scss');
 
 // Debugger
 Flight.Debugger.showEvents = true;

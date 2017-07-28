@@ -4,6 +4,7 @@ import Events from 'events';
 import userHtml from './user.html';
 import userPatch from './user.patch';
 import PatchIt from 'PatchIt';
+import styles from './user-item.scss';
 
 const userTemplate = PatchIt.template(userHtml, userPatch);
 

@@ -274,6 +274,9 @@ Events.Repositories = {};
 Events.Repositories.Request = _flight2.default.eventOfType(RepositoriesRequest).alias('Repositories:Request');
 Events.Repositories.Response = _flight2.default.eventOfType(ItemListEvent).alias('Repositories:Response');
 
+// Events.Repository = {};
+// Events.Repository.Chosen = Flight.eventOfType(RepositoryEvent).alias('Repository:Chosen');
+
 Events.Flow = {};
 Events.Flow.ShowStep = _flight2.default.eventOfType(FlowEvent).alias('Flow:ShowStep');
 
@@ -11334,17 +11337,17 @@ var _userSearch = __webpack_require__(15);
 
 var _userSearch2 = _interopRequireDefault(_userSearch);
 
-var _userBadge = __webpack_require__(21);
+var _userBadge = __webpack_require__(23);
 
 var _userBadge2 = _interopRequireDefault(_userBadge);
 
-var _repositoryList = __webpack_require__(22);
+var _repositoryList = __webpack_require__(26);
 
 var _repositoryList2 = _interopRequireDefault(_repositoryList);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//require('./app.scss');
+__webpack_require__(33);
 
 // Debugger
 _flight2.default.Debugger.showEvents = true;
@@ -11809,13 +11812,17 @@ var _jquery = __webpack_require__(4);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _debounce = __webpack_require__(19);
+var _debounce = __webpack_require__(20);
 
 var _debounce2 = _interopRequireDefault(_debounce);
 
-var _userSearch = __webpack_require__(20);
+var _userSearch = __webpack_require__(21);
 
 var _userSearch2 = _interopRequireDefault(_userSearch);
+
+var _userSearch3 = __webpack_require__(22);
+
+var _userSearch4 = _interopRequireDefault(_userSearch3);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11955,6 +11962,10 @@ var _PatchIt = __webpack_require__(9);
 
 var _PatchIt2 = _interopRequireDefault(_PatchIt);
 
+var _userItem = __webpack_require__(19);
+
+var _userItem2 = _interopRequireDefault(_userItem);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -12039,6 +12050,12 @@ function shortened(str) {
 /* 19 */
 /***/ (function(module, exports) {
 
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports) {
+
 /**
  * Returns a function, that, as long as it continues to be invoked, will not
  * be triggered. The function will be called after it stops being called for
@@ -12098,13 +12115,19 @@ module.exports = function debounce(func, wait, immediate){
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports) {
 
 module.exports = "<aside>\n    <img src=\"bin/unknown.jpg\"/>\n    <big>@</big><input type=\"text\" id=\"search-query\" />\n</aside>\n<main>\n    <user-list></user-list>\n</main>\n";
 
 /***/ }),
-/* 21 */
+/* 22 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12132,9 +12155,13 @@ var _jquery = __webpack_require__(4);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _userBadge = __webpack_require__(27);
+var _userBadge = __webpack_require__(24);
 
 var _userBadge2 = _interopRequireDefault(_userBadge);
+
+var _userBadge3 = __webpack_require__(25);
+
+var _userBadge4 = _interopRequireDefault(_userBadge3);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -12194,7 +12221,19 @@ var UserBadgeComponent = function (_Flight$UIComponent) {
 exports.default = UserBadgeComponent;
 
 /***/ }),
-/* 22 */
+/* 24 */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"back-link\" title=\"back to users\">\n    <img src=\"bin/unknown.jpg\"/>\n</div>\n<user-name></user-name>\n";
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12214,13 +12253,17 @@ var _namespace = __webpack_require__(1);
 
 var _namespace2 = _interopRequireDefault(_namespace);
 
-var _repositoryItem = __webpack_require__(23);
+var _repositoryItem = __webpack_require__(27);
 
 var _repositoryItem2 = _interopRequireDefault(_repositoryItem);
 
 var _events = __webpack_require__(2);
 
 var _events2 = _interopRequireDefault(_events);
+
+var _repositoryList = __webpack_require__(32);
+
+var _repositoryList2 = _interopRequireDefault(_repositoryList);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -12305,7 +12348,7 @@ var RepositoryListComponent = function (_Flight$UIComponent) {
 exports.default = RepositoryListComponent;
 
 /***/ }),
-/* 23 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12329,21 +12372,25 @@ var _events = __webpack_require__(2);
 
 var _events2 = _interopRequireDefault(_events);
 
-var _repository = __webpack_require__(24);
+var _repository = __webpack_require__(28);
 
 var _repository2 = _interopRequireDefault(_repository);
 
-var _repository3 = __webpack_require__(25);
+var _repository3 = __webpack_require__(29);
 
 var _repository4 = _interopRequireDefault(_repository3);
 
-var _repository5 = __webpack_require__(26);
+var _repository5 = __webpack_require__(30);
 
 var _repository6 = _interopRequireDefault(_repository5);
 
 var _PatchIt = __webpack_require__(9);
 
 var _PatchIt2 = _interopRequireDefault(_PatchIt);
+
+var _repositoryItem = __webpack_require__(31);
+
+var _repositoryItem2 = _interopRequireDefault(_repositoryItem);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -12394,7 +12441,7 @@ var RepositoryItemComponent = function (_Flight$UIComponent) {
 exports.default = RepositoryItemComponent;
 
 /***/ }),
-/* 24 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12419,13 +12466,13 @@ var Repository = function Repository(repo) {
 exports.default = Repository;
 
 /***/ }),
-/* 25 */
+/* 29 */
 /***/ (function(module, exports) {
 
 module.exports = "<repository-item>\n    <strong var=\"name\"></strong>\n    <p var=\"description\"></p>\n    <fork title=\"forked repository\"></fork>\n    <language var=\"language\"></language>\n</repository-item>\n";
 
 /***/ }),
-/* 26 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12455,10 +12502,22 @@ function classNameFor(language) {
 }
 
 /***/ }),
-/* 27 */
+/* 31 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"back-link\" title=\"back to users\">\n    <img src=\"bin/unknown.jpg\"/>\n</div>\n<user-name></user-name>\n";
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

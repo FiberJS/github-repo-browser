@@ -5,6 +5,7 @@ import Events from 'events';
 import jquery from 'jquery';
 import debounce from 'debounce';
 import template from './user-search.html';
+import styles from './user-search.scss';
 const $ = jquery;
 
 const ENTER = 13;
