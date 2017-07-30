@@ -24,6 +24,7 @@ class RepositoryItemComponent extends Flight.UIComponent {
     }
 
     choose() {
+        console.log(NameSpace.GitHub.state.currentUser);
         // this.on(NameSpace.GitHub).trigger(
         //     new Events.Repositories.Chosen(this.repository)
         // );

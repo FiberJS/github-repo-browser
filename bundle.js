@@ -179,30 +179,6 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _flight = __webpack_require__(0);
-
-var _flight2 = _interopRequireDefault(_flight);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var NameSpace = {
-    System: _flight2.default.getOrCreateEventPool('data/system'),
-    GitHub: _flight2.default.getOrCreateEventPool('data/github')
-};
-
-exports.default = NameSpace;
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _flight = __webpack_require__(0);
@@ -283,6 +259,42 @@ Events.Flow.ShowStep = _flight2.default.eventOfType(FlowEvent).alias('Flow:ShowS
 exports.default = Events;
 
 /***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _flight = __webpack_require__(0);
+
+var _flight2 = _interopRequireDefault(_flight);
+
+var _events = __webpack_require__(1);
+
+var _events2 = _interopRequireDefault(_events);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var NameSpace = {
+    System: _flight2.default.getOrCreateEventPool('data/system'),
+    GitHub: _flight2.default.getOrCreateEventPool('data/github')
+};
+
+NameSpace.GitHub.defineState({
+    currentUser: function currentUser(state) {
+        return [_events2.default.User.Chosen, function (event) {
+            state.currentUser = event.user;
+        }];
+    }
+});
+
+exports.default = NameSpace;
+
+/***/ }),
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -344,9 +356,25 @@ var EventPool = exports.EventPool = function () {
             return realHandler;
         }
     }, {
-        key: '$',
-        value: function $(key) {
-            return getOrCreateEventPool(this.path + '/#' + key);
+        key: 'defineState',
+        value: function defineState(stateDefinition) {
+            var _this2 = this;
+
+            this.__state || (this.__state = {});
+            this.state || (this.state = {});
+            Object.getOwnPropertyNames(stateDefinition).forEach(function (property) {
+                _this2.__state[property] = null;
+                Object.defineProperty(_this2.state, property, {
+                    get: function get() {
+                        return _this2.__state[property];
+                    },
+                    enumerable: true
+                });
+                var setters = stateDefinition[property](_this2.__state);
+                for (var i = 0; i < setters.length; i += 2) {
+                    _this2.addEventListener(setters[i], setters[i + 1]);
+                }
+            });
         }
     }], [{
         key: 'forElement',
@@ -379,13 +407,13 @@ var DataEventPool = exports.DataEventPool = function (_EventPool) {
     function DataEventPool(name, path) {
         _classCallCheck(this, DataEventPool);
 
-        var _this2 = _possibleConstructorReturn(this, (DataEventPool.__proto__ || Object.getPrototypeOf(DataEventPool)).call(this));
+        var _this3 = _possibleConstructorReturn(this, (DataEventPool.__proto__ || Object.getPrototypeOf(DataEventPool)).call(this));
 
-        _this2.name = name;
-        _this2.path = path;
-        _this2.element = _this2.createElement(name);
-        _this2.children = {};
-        return _this2;
+        _this3.name = name;
+        _this3.path = path;
+        _this3.element = _this3.createElement(name);
+        _this3.children = {};
+        return _this3;
     }
 
     _createClass(DataEventPool, [{
@@ -11317,11 +11345,11 @@ var _flight = __webpack_require__(0);
 
 var _flight2 = _interopRequireDefault(_flight);
 
-var _namespace = __webpack_require__(1);
+var _namespace = __webpack_require__(2);
 
 var _namespace2 = _interopRequireDefault(_namespace);
 
-var _events = __webpack_require__(2);
+var _events = __webpack_require__(1);
 
 var _events2 = _interopRequireDefault(_events);
 
@@ -11599,11 +11627,11 @@ var _flight = __webpack_require__(0);
 
 var _flight2 = _interopRequireDefault(_flight);
 
-var _namespace = __webpack_require__(1);
+var _namespace = __webpack_require__(2);
 
 var _namespace2 = _interopRequireDefault(_namespace);
 
-var _events = __webpack_require__(2);
+var _events = __webpack_require__(1);
 
 var _events2 = _interopRequireDefault(_events);
 
@@ -11690,11 +11718,11 @@ var _flight = __webpack_require__(0);
 
 var _flight2 = _interopRequireDefault(_flight);
 
-var _namespace = __webpack_require__(1);
+var _namespace = __webpack_require__(2);
 
 var _namespace2 = _interopRequireDefault(_namespace);
 
-var _events = __webpack_require__(2);
+var _events = __webpack_require__(1);
 
 var _events2 = _interopRequireDefault(_events);
 
@@ -11796,7 +11824,7 @@ var _flight = __webpack_require__(0);
 
 var _flight2 = _interopRequireDefault(_flight);
 
-var _namespace = __webpack_require__(1);
+var _namespace = __webpack_require__(2);
 
 var _namespace2 = _interopRequireDefault(_namespace);
 
@@ -11804,7 +11832,7 @@ var _userItem = __webpack_require__(16);
 
 var _userItem2 = _interopRequireDefault(_userItem);
 
-var _events = __webpack_require__(2);
+var _events = __webpack_require__(1);
 
 var _events2 = _interopRequireDefault(_events);
 
@@ -11942,11 +11970,11 @@ var _flight = __webpack_require__(0);
 
 var _flight2 = _interopRequireDefault(_flight);
 
-var _namespace = __webpack_require__(1);
+var _namespace = __webpack_require__(2);
 
 var _namespace2 = _interopRequireDefault(_namespace);
 
-var _events = __webpack_require__(2);
+var _events = __webpack_require__(1);
 
 var _events2 = _interopRequireDefault(_events);
 
@@ -12143,11 +12171,11 @@ var _flight = __webpack_require__(0);
 
 var _flight2 = _interopRequireDefault(_flight);
 
-var _namespace = __webpack_require__(1);
+var _namespace = __webpack_require__(2);
 
 var _namespace2 = _interopRequireDefault(_namespace);
 
-var _events = __webpack_require__(2);
+var _events = __webpack_require__(1);
 
 var _events2 = _interopRequireDefault(_events);
 
@@ -12249,7 +12277,7 @@ var _flight = __webpack_require__(0);
 
 var _flight2 = _interopRequireDefault(_flight);
 
-var _namespace = __webpack_require__(1);
+var _namespace = __webpack_require__(2);
 
 var _namespace2 = _interopRequireDefault(_namespace);
 
@@ -12257,7 +12285,7 @@ var _repositoryItem = __webpack_require__(27);
 
 var _repositoryItem2 = _interopRequireDefault(_repositoryItem);
 
-var _events = __webpack_require__(2);
+var _events = __webpack_require__(1);
 
 var _events2 = _interopRequireDefault(_events);
 
@@ -12364,11 +12392,11 @@ var _flight = __webpack_require__(0);
 
 var _flight2 = _interopRequireDefault(_flight);
 
-var _namespace = __webpack_require__(1);
+var _namespace = __webpack_require__(2);
 
 var _namespace2 = _interopRequireDefault(_namespace);
 
-var _events = __webpack_require__(2);
+var _events = __webpack_require__(1);
 
 var _events2 = _interopRequireDefault(_events);
 
@@ -12429,6 +12457,7 @@ var RepositoryItemComponent = function (_Flight$UIComponent) {
     }, {
         key: 'choose',
         value: function choose() {
+            console.log(_namespace2.default.GitHub.state.currentUser);
             // this.on(NameSpace.GitHub).trigger(
             //     new Events.Repositories.Chosen(this.repository)
             // );
