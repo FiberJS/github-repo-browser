@@ -6,6 +6,10 @@ import FlowManagerComponent from 'components/ui/flow-manager';
 import UserSearchComponent from 'components/ui/user-search';
 import UserBadgeComponent from 'components/ui/user-badge';
 import RepositoryListComponent from 'components/ui/repository-list';
+
+import usersTemplate from 'components/ui/flow-manager/pages/users.html';
+import repositoriesTemplate from 'components/ui/flow-manager/pages/repositories.html';
+
 require('./app.scss');
 
 // Debugger
@@ -18,10 +22,19 @@ Flight.app(() => {
     GitHubComponent.attachTo(NameSpace.GitHub);
 
     // ui components
-    FlowManagerComponent.attachTo('flow-manager');
-    UserSearchComponent.attachTo('user-search');
-    UserBadgeComponent.attachTo('user-badge');
-    RepositoryListComponent.attachTo('repository-list');
+    FlowManagerComponent.attachTo('flow-manager')
+        .addStep({
+            name: 'users',
+            template: usersTemplate,
+            components: [ UserSearchComponent ],
+        })
+        .addStep({
+            name: 'repositories',
+            template: repositoriesTemplate,
+            components: [ UserBadgeComponent, RepositoryListComponent ],
+            nameSpace: NameSpace.GitHub,
+            events: [ Events.User.Chosen ],
+        });
 });
 
 // debugging

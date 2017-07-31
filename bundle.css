@@ -108,9 +108,6 @@ body {
   font-family: monospace; }
 
 flow-step {
-  display: none; }
-
-flow-step.active {
   display: block; }
 
 aside {

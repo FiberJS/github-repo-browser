@@ -11026,6 +11026,11 @@ var UIComponent = function () {
             }
         }
     }], [{
+        key: 'elementName',
+        value: function elementName() {
+            return this.name.replace('Component', '').replace(/[A-Z]/g, '-$&').toLowerCase().substr(1);
+        }
+    }, {
         key: 'attachTo',
         value: function attachTo(element) {
             element = _DOM2.default.getElement(element);
@@ -11036,6 +11041,22 @@ var UIComponent = function () {
             instance.listen();
 
             return instance;
+        }
+    }, {
+        key: 'populate',
+        value: function populate(parentElement) {
+            var _this = this;
+
+            if (!parentElement instanceof Element) {
+                return false;
+            }
+
+            var elements = parentElement.querySelectorAll(this.elementName());
+            elements.forEach(function (element) {
+                _this.attachTo(element);
+            });
+
+            return elements;
         }
     }]);
 
@@ -11373,9 +11394,17 @@ var _repositoryList = __webpack_require__(26);
 
 var _repositoryList2 = _interopRequireDefault(_repositoryList);
 
+var _users = __webpack_require__(33);
+
+var _users2 = _interopRequireDefault(_users);
+
+var _repositories = __webpack_require__(34);
+
+var _repositories2 = _interopRequireDefault(_repositories);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-__webpack_require__(33);
+__webpack_require__(35);
 
 // Debugger
 _flight2.default.Debugger.showEvents = true;
@@ -11387,10 +11416,17 @@ _flight2.default.app(function () {
     _github2.default.attachTo(_namespace2.default.GitHub);
 
     // ui components
-    _flowManager2.default.attachTo('flow-manager');
-    _userSearch2.default.attachTo('user-search');
-    _userBadge2.default.attachTo('user-badge');
-    _repositoryList2.default.attachTo('repository-list');
+    _flowManager2.default.attachTo('flow-manager').addStep({
+        name: 'users',
+        template: _users2.default,
+        components: [_userSearch2.default]
+    }).addStep({
+        name: 'repositories',
+        template: _repositories2.default,
+        components: [_userBadge2.default, _repositoryList2.default],
+        nameSpace: _namespace2.default.GitHub,
+        events: [_events2.default.User.Chosen]
+    });
 });
 
 // debugging
@@ -11730,6 +11766,14 @@ var _jquery = __webpack_require__(4);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
+var _users = __webpack_require__(33);
+
+var _users2 = _interopRequireDefault(_users);
+
+var _repositories = __webpack_require__(34);
+
+var _repositories2 = _interopRequireDefault(_repositories);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -11754,7 +11798,6 @@ var FlowManagerComponent = function (_Flight$UIComponent) {
     _createClass(FlowManagerComponent, [{
         key: 'init',
         value: function init() {
-            this.steps = ['user', 'repository'];
             this.rootUrl = document.location.toString().split('#')[0];
         }
     }, {
@@ -11765,40 +11808,103 @@ var FlowManagerComponent = function (_Flight$UIComponent) {
             this.on(_namespace2.default.System).listen(_flight2.default.System.Ready, function (event) {
                 return _this2.setup();
             });
-            this.on(_namespace2.default.GitHub).listen(_events2.default.User.Chosen, function (event) {
-                return _this2.moveTo('repository');
-            });
             this.ui(this.view).listen(_events2.default.Flow.ShowStep, function (event) {
                 return _this2.moveTo(event.step);
             });
 
             window.onpopstate = function (event) {
-                _this2.hideSteps();
                 _this2.showStep(event.state || _this2.steps[0]);
             };
         }
     }, {
-        key: 'hideSteps',
-        value: function hideSteps() {
-            $('flow-step', this.view).removeClass('active');
-        }
-    }, {
         key: 'showStep',
         value: function showStep(step) {
-            $('flow-step#step-' + step, this.view).addClass('active');
+            if (this.view.firstElementChild) {
+                this.view.firstElementChild.remove();
+            }
+            this.view.append(this.pages[step]);
         }
     }, {
         key: 'setup',
         value: function setup() {
-            this.hideSteps();
             this.showStep(this.steps[0]);
         }
     }, {
         key: 'moveTo',
         value: function moveTo(step) {
-            this.hideSteps();
             this.showStep(step);
             history.pushState(step, step, this.rootUrl + '#' + step);
+        }
+    }, {
+        key: 'addStep',
+        value: function addStep(stepDefinition) {
+            var _this3 = this;
+
+            this.pages || (this.pages = {});
+            (this.steps || (this.steps = [])).push(stepDefinition.name);
+
+            var root = document.createElement('flow-step');
+            root.innerHTML = stepDefinition.template;
+
+            this.pages[stepDefinition.name] = root;
+
+            if (stepDefinition.components) {
+                var _iteratorNormalCompletion = true;
+                var _didIteratorError = false;
+                var _iteratorError = undefined;
+
+                try {
+                    for (var _iterator = stepDefinition.components[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                        var component = _step.value;
+
+                        component.populate(root);
+                    }
+                } catch (err) {
+                    _didIteratorError = true;
+                    _iteratorError = err;
+                } finally {
+                    try {
+                        if (!_iteratorNormalCompletion && _iterator.return) {
+                            _iterator.return();
+                        }
+                    } finally {
+                        if (_didIteratorError) {
+                            throw _iteratorError;
+                        }
+                    }
+                }
+            }
+
+            if (stepDefinition.events) {
+                var _iteratorNormalCompletion2 = true;
+                var _didIteratorError2 = false;
+                var _iteratorError2 = undefined;
+
+                try {
+                    for (var _iterator2 = stepDefinition.events[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                        var StepEvent = _step2.value;
+
+                        this.on(stepDefinition.nameSpace).listen(StepEvent, function (event) {
+                            return _this3.moveTo(stepDefinition.name);
+                        });
+                    }
+                } catch (err) {
+                    _didIteratorError2 = true;
+                    _iteratorError2 = err;
+                } finally {
+                    try {
+                        if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                            _iterator2.return();
+                        }
+                    } finally {
+                        if (_didIteratorError2) {
+                            throw _iteratorError2;
+                        }
+                    }
+                }
+            }
+
+            return this;
         }
     }]);
 
@@ -11880,7 +11986,7 @@ var UserSearchComponent = function (_Flight$UIComponent) {
 
             this.renderTemplate();
 
-            this.$searchBar = $('#search-query');
+            this.$searchBar = $('#search-query', this.view);
             this.$userList = $('user-list', this.view);
             var debouncedKeyPress = (0, _debounce2.default)(function () {
                 return _this2.onKeyPress();
@@ -12239,7 +12345,7 @@ var UserBadgeComponent = function (_Flight$UIComponent) {
     }, {
         key: 'showUsers',
         value: function showUsers() {
-            this.ui(this.view).trigger(new _events2.default.Flow.ShowStep('user'));
+            this.ui(this.view).trigger(new _events2.default.Flow.ShowStep('users'));
         }
     }]);
 
@@ -12544,6 +12650,18 @@ function classNameFor(language) {
 
 /***/ }),
 /* 33 */
+/***/ (function(module, exports) {
+
+module.exports = "<user-search></user-search>\n";
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports) {
+
+module.exports = "<aside>\n    <user-badge></user-badge>\n</aside>\n<main>\n    <repository-list></repository-list>\n</main>\n";
+
+/***/ }),
+/* 35 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

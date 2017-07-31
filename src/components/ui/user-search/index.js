@@ -15,7 +15,7 @@ class UserSearchComponent extends Flight.UIComponent {
     listen() {
         this.renderTemplate();
 
-        this.$searchBar = $('#search-query');
+        this.$searchBar = $('#search-query', this.view);
         this.$userList = $('user-list', this.view);
         const debouncedKeyPress = debounce(()=>this.onKeyPress(), 400);
 

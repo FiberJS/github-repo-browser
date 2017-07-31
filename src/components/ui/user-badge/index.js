@@ -32,7 +32,7 @@ class UserBadgeComponent extends Flight.UIComponent {
 
     showUsers() {
         this.ui(this.view).trigger(
-            new Events.Flow.ShowStep('user')
+            new Events.Flow.ShowStep('users')
         )
     }
 }
