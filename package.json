@@ -42,6 +42,7 @@
     "PatchIt": "git+https://github.com/jsbuzz/PatchIt.git",
     "debounce": "^1.0.2",
     "framework-concept": "git+https://github.com/jsbuzz/framework-concept.git",
+    "flow-manager": "git+https://github.com/jsbuzz/3flight-flow-manager.git",
     "jquery": "^3.2.1",
     "marked": "^0.3.6"
   }

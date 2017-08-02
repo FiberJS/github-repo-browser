@@ -9,6 +9,9 @@ const NameSpace = {
 NameSpace.GitHub.defineState({
     currentUser : (state) => [
         Events.User.Chosen, event => { state.currentUser = event.user },
+    ],
+    currentRepo : (state) => [
+        Events.Repository.Chosen, event => { state.currentRepo = event.repository },
     ]
 });
 

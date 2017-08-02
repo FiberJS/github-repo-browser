@@ -29,6 +29,11 @@ module.exports = {
           loader: 'babel-loader?presets[]=es2015'
         },
         {
+          test: /\.js$/,
+          include: /node_modules\/flow-manager/,
+          loader: 'babel-loader?presets[]=es2015'
+        },
+        {
           test: /\.html$/,
           loader: 'html-loader?attrs=false',
           exclude: /node_modules/
@@ -53,10 +58,12 @@ module.exports = {
     alias: {
       flight: path.resolve(__dirname, 'node_modules/framework-concept/flight'),
       PatchIt: path.resolve(__dirname, 'node_modules/PatchIt'),
+      FlowManager: path.resolve(__dirname, 'node_modules/flow-manager/src'),
       components: path.resolve(__dirname, 'src/components'),
       domain: path.resolve(__dirname, 'src/domain'),
       events: path.resolve(__dirname, 'src/events'),
       namespace: path.resolve(__dirname, 'src/namespace'),
+      pages: path.resolve(__dirname, 'src/pages'),
       repositories: path.resolve(__dirname, 'src/repositories'),
     }
   },

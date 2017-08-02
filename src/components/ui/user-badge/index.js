@@ -17,7 +17,7 @@ class UserBadgeComponent extends Flight.UIComponent {
         );
 
         this.ui(this.view).listen(
-            'click', event => this.showUsers(),
+            'click', event => this.stepBack(),
         );
     }
 
@@ -30,9 +30,9 @@ class UserBadgeComponent extends Flight.UIComponent {
         $('user-name', this.view).html('@' + user.login);
     }
 
-    showUsers() {
+    stepBack() {
         this.ui(this.view).trigger(
-            new Events.Flow.ShowStep('users')
+            new Events.Flow.StepBack()
         )
     }
 }

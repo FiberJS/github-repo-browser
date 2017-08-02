@@ -13,6 +13,12 @@ const UserEvent = Flight.eventType(
     }
 );
 
+const RepositoryEvent = Flight.eventType(
+    function(repository) {
+        this.repository = repository;
+    }
+);
+
 const UserQueryEvent = Flight.eventType(
     function(query) {
         this.query = query;
@@ -36,13 +42,6 @@ class ItemListEvent extends Flight.Event {
     }
 }
 
-const FlowEvent = Flight.eventType(
-    function(step) {
-        this.step = step;
-    }
-);
-
-
 const Events = {};
 
 Events.UserQuery = {};
@@ -57,10 +56,12 @@ Events.Repositories = {};
 Events.Repositories.Request = Flight.eventOfType(RepositoriesRequest).alias('Repositories:Request');
 Events.Repositories.Response = Flight.eventOfType(ItemListEvent).alias('Repositories:Response');
 
-// Events.Repository = {};
-// Events.Repository.Chosen = Flight.eventOfType(RepositoryEvent).alias('Repository:Chosen');
+Events.Repository = {};
+Events.Repository.Chosen = Flight.eventOfType(RepositoryEvent).alias('Repository:Chosen');
 
+import { ShowStepEvent, StepBackEvent } from 'FlowManager/events';
 Events.Flow = {};
-Events.Flow.ShowStep = Flight.eventOfType(FlowEvent).alias('Flow:ShowStep');
+Events.Flow.ShowStep = ShowStepEvent;
+Events.Flow.StepBack = StepBackEvent;
 
 export default Events;
