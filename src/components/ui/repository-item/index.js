@@ -7,7 +7,6 @@ import repositoryPatch from './repository.patch';
 import PatchIt from 'PatchIt';
 import styles from './repository-item.scss';
 
-
 const repositoryTemplate = PatchIt.template(repositoryHtml, repositoryPatch);
 
 class RepositoryItemComponent extends Flight.UIComponent {
@@ -24,7 +23,6 @@ class RepositoryItemComponent extends Flight.UIComponent {
     }
 
     choose() {
-        console.log(NameSpace.GitHub.state.currentUser);
         this.on(NameSpace.GitHub).trigger(
             new Events.Repository.Chosen(this.repository)
         );

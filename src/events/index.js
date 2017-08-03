@@ -19,6 +19,12 @@ const RepositoryEvent = Flight.eventType(
     }
 );
 
+const RepositoryDetailsEvent = Flight.eventType(
+    function(details) {
+        this.details = details;
+    }
+);
+
 const UserQueryEvent = Flight.eventType(
     function(query) {
         this.query = query;
@@ -58,6 +64,8 @@ Events.Repositories.Response = Flight.eventOfType(ItemListEvent).alias('Reposito
 
 Events.Repository = {};
 Events.Repository.Chosen = Flight.eventOfType(RepositoryEvent).alias('Repository:Chosen');
+Events.Repository.DetailsRequest = Flight.eventOfType(RepositoryEvent).alias('Repository:DetailsRequest');
+Events.Repository.DetailsReady = Flight.eventOfType(RepositoryDetailsEvent).alias('Repository:DetailsReady');
 
 import { ShowStepEvent, StepBackEvent } from 'FlowManager/events';
 Events.Flow = {};

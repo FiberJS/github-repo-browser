@@ -8,6 +8,7 @@ import reposJson from './repos.json';
 
 const GITHUB_SEARCH_URL = 'https://api.github.com/search/users';
 const GITHUB_REPO_URL = (user) => `https://api.github.com/users/${user}/repos`;
+const GITHUB_README_URL = (user, repo) => `https://api.github.com/repos/${user}/${repo}/readme`;
 
 class GitHubComponent extends Flight.DataComponent {
 
@@ -15,6 +16,7 @@ class GitHubComponent extends Flight.DataComponent {
         this.on(NameSpace.GitHub).listen(
             Events.UserQuery.Request, event => this.queryUsers(event.query),
             Events.Repositories.Request, event => this.getRepositories(event.user),
+            Events.Repository.DetailsRequest, event => this.getRepository(event.repository),
         );
     }
 
@@ -43,6 +45,29 @@ class GitHubComponent extends Flight.DataComponent {
         }).fail((error) => {
             this.on(NameSpace.GitHub).trigger(
                 new Events.Repositories.Error(error, user)
+            );
+        });
+    }
+
+    getRepository(repository) {
+        const login = NameSpace.GitHub.state.currentUser.login;
+        jquery.getJSON(
+            GITHUB_README_URL(login, repository.name)
+        ).done((response) => {
+            jquery
+            .get(response.download_url)
+            .done((response) => {
+                this.on(NameSpace.GitHub).trigger(
+                    new Events.Repository.DetailsReady({
+                        name: repository.name,
+                        readme: response,
+                    })
+                );
+            })
+
+        }).fail((error) => {
+            this.on(NameSpace.GitHub).trigger(
+                new Events.Repository.Error(error, user)
             );
         });
     }
