@@ -254,11 +254,13 @@ Events.User.Chosen = _flight2.default.eventOfType(UserEvent).alias('User:Chosen'
 Events.Repositories = {};
 Events.Repositories.Request = _flight2.default.eventOfType(RepositoriesRequest).alias('Repositories:Request');
 Events.Repositories.Response = _flight2.default.eventOfType(ItemListEvent).alias('Repositories:Response');
+Events.Repositories.Error = _flight2.default.eventOfType(ErrorResponse).alias('Repositories:Error');
 
 Events.Repository = {};
 Events.Repository.Chosen = _flight2.default.eventOfType(RepositoryEvent).alias('Repository:Chosen');
 Events.Repository.DetailsRequest = _flight2.default.eventOfType(RepositoryEvent).alias('Repository:DetailsRequest');
 Events.Repository.DetailsReady = _flight2.default.eventOfType(RepositoryDetailsEvent).alias('Repository:DetailsReady');
+Events.Repository.Error = _flight2.default.eventOfType(ErrorResponse).alias('Repository:Error');
 
 Events.Flow = {};
 Events.Flow.ShowStep = _events.ShowStepEvent;
@@ -11875,7 +11877,7 @@ var GitHubComponent = function (_Flight$DataComponent) {
                         readme: MISSING_README(repository.name)
                     }));
                 } else {
-                    _this5.on(_namespace2.default.GitHub).trigger(new _events2.default.Repository.Error(error, user));
+                    _this5.on(_namespace2.default.GitHub).trigger(new _events2.default.Repository.Error(error, repository));
                 }
             });
         }

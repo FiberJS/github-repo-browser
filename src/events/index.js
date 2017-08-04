@@ -61,11 +61,13 @@ Events.User.Chosen = Flight.eventOfType(UserEvent).alias('User:Chosen');
 Events.Repositories = {};
 Events.Repositories.Request = Flight.eventOfType(RepositoriesRequest).alias('Repositories:Request');
 Events.Repositories.Response = Flight.eventOfType(ItemListEvent).alias('Repositories:Response');
+Events.Repositories.Error = Flight.eventOfType(ErrorResponse).alias('Repositories:Error');
 
 Events.Repository = {};
 Events.Repository.Chosen = Flight.eventOfType(RepositoryEvent).alias('Repository:Chosen');
 Events.Repository.DetailsRequest = Flight.eventOfType(RepositoryEvent).alias('Repository:DetailsRequest');
 Events.Repository.DetailsReady = Flight.eventOfType(RepositoryDetailsEvent).alias('Repository:DetailsReady');
+Events.Repository.Error = Flight.eventOfType(ErrorResponse).alias('Repository:Error');
 
 import { ShowStepEvent, StepBackEvent } from 'FlowManager/events';
 Events.Flow = {};

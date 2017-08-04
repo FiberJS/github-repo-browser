@@ -81,7 +81,7 @@ class GitHubComponent extends Flight.DataComponent {
                 );
             } else {
                 this.on(NameSpace.GitHub).trigger(
-                    new Events.Repository.Error(error, user)
+                    new Events.Repository.Error(error, repository)
                 );
             }
         });
