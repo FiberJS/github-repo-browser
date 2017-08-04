@@ -11805,6 +11805,9 @@ var GITHUB_REPO_URL = function GITHUB_REPO_URL(user) {
 var GITHUB_README_URL = function GITHUB_README_URL(user, repo) {
     return 'https://api.github.com/repos/' + user + '/' + repo + '/readme';
 };
+var MISSING_README = function MISSING_README(repoName) {
+    return '# ' + repoName + '\n-- No information provided --';
+};
 
 var GitHubComponent = function (_Flight$DataComponent) {
     _inherits(GitHubComponent, _Flight$DataComponent);
@@ -11860,11 +11863,20 @@ var GitHubComponent = function (_Flight$DataComponent) {
                 _jquery2.default.get(response.download_url).done(function (response) {
                     _this5.on(_namespace2.default.GitHub).trigger(new _events2.default.Repository.DetailsReady({
                         name: repository.name,
-                        readme: response
+                        readme: response || MISSING_README(repository.name)
                     }));
+                }).fail(function (response) {
+                    _this5.on(_namespace2.default.GitHub).trigger(new _events2.default.Repository.Error(error, user));
                 });
             }).fail(function (error) {
-                _this5.on(_namespace2.default.GitHub).trigger(new _events2.default.Repository.Error(error, user));
+                if (error.status == 404) {
+                    _this5.on(_namespace2.default.GitHub).trigger(new _events2.default.Repository.DetailsReady({
+                        name: repository.name,
+                        readme: MISSING_README(repository.name)
+                    }));
+                } else {
+                    _this5.on(_namespace2.default.GitHub).trigger(new _events2.default.Repository.Error(error, user));
+                }
             });
         }
     }]);
@@ -11964,6 +11976,9 @@ var FlowManagerComponent = function (_Flight$UIComponent) {
     }, {
         key: 'setup',
         value: function setup() {
+            if (document.location.toString() !== this.rootUrl) {
+                document.location = this.rootUrl + '#' + this.steps[0];
+            }
             this.showStep(this.steps[0]);
         }
     }, {
@@ -12799,6 +12814,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var repositoryDetailsTemplate = _PatchIt2.default.template(_repositoryDetails2.default, _repositoryDetails4.default);
 
+var EMPTY_STATE = { readme: '' };
+
 var RepositoryDetailsComponent = function (_Flight$UIComponent) {
     _inherits(RepositoryDetailsComponent, _Flight$UIComponent);
 
@@ -12813,9 +12830,7 @@ var RepositoryDetailsComponent = function (_Flight$UIComponent) {
         value: function listen() {
             var _this2 = this;
 
-            this.detailsView = repositoryDetailsTemplate.render({
-                readme: ''
-            });
+            this.detailsView = repositoryDetailsTemplate.render(EMPTY_STATE);
             this.view.append(this.detailsView);
 
             this.on(_namespace2.default.GitHub).listen(_events2.default.Repository.Chosen, function (event) {
@@ -12827,11 +12842,14 @@ var RepositoryDetailsComponent = function (_Flight$UIComponent) {
     }, {
         key: 'getRepoDetails',
         value: function getRepoDetails(repository) {
+            this.detailsView.className = 'loading';
+            this.detailsView.apply(EMPTY_STATE);
             this.on(_namespace2.default.GitHub).trigger(new _events2.default.Repository.DetailsRequest(repository));
         }
     }, {
         key: 'showDetails',
         value: function showDetails(details) {
+            this.detailsView.className = '';
             this.detailsView.apply(details);
         }
     }]);

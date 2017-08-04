@@ -9,6 +9,7 @@ import reposJson from './repos.json';
 const GITHUB_SEARCH_URL = 'https://api.github.com/search/users';
 const GITHUB_REPO_URL = (user) => `https://api.github.com/users/${user}/repos`;
 const GITHUB_README_URL = (user, repo) => `https://api.github.com/repos/${user}/${repo}/readme`;
+const MISSING_README = (repoName) => `# ${repoName}\n-- No information provided --`;
 
 class GitHubComponent extends Flight.DataComponent {
 
@@ -24,11 +25,11 @@ class GitHubComponent extends Flight.DataComponent {
         jquery.getJSON(
             GITHUB_SEARCH_URL,
             { q: query }
-        ).done((response) => {
+        ).done(response => {
             this.on(NameSpace.GitHub).trigger(
                 new Events.UserQuery.Response(response.items)
             );
-        }).fail((error) => {
+        }).fail(error => {
             this.on(NameSpace.GitHub).trigger(
                 new Events.UserQuery.Error(error, query)
             );
@@ -38,11 +39,11 @@ class GitHubComponent extends Flight.DataComponent {
     getRepositories(user) {
         jquery.getJSON(
             GITHUB_REPO_URL(user.login)
-        ).done((response) => {
+        ).done(response => {
             this.on(NameSpace.GitHub).trigger(
                 new Events.Repositories.Response(response)
             );
-        }).fail((error) => {
+        }).fail(error => {
             this.on(NameSpace.GitHub).trigger(
                 new Events.Repositories.Error(error, user)
             );
@@ -53,22 +54,36 @@ class GitHubComponent extends Flight.DataComponent {
         const login = NameSpace.GitHub.state.currentUser.login;
         jquery.getJSON(
             GITHUB_README_URL(login, repository.name)
-        ).done((response) => {
+        ).done(response => {
             jquery
             .get(response.download_url)
-            .done((response) => {
+            .done(response => {
                 this.on(NameSpace.GitHub).trigger(
                     new Events.Repository.DetailsReady({
                         name: repository.name,
-                        readme: response,
+                        readme: response || MISSING_README(repository.name),
                     })
                 );
             })
+            .fail(response => {
+                this.on(NameSpace.GitHub).trigger(
+                    new Events.Repository.Error(error, user)
+                );
+            })
 
-        }).fail((error) => {
-            this.on(NameSpace.GitHub).trigger(
-                new Events.Repository.Error(error, user)
-            );
+        }).fail(error => {
+            if(error.status == 404) {
+                this.on(NameSpace.GitHub).trigger(
+                    new Events.Repository.DetailsReady({
+                        name: repository.name,
+                        readme: MISSING_README(repository.name),
+                    })
+                );
+            } else {
+                this.on(NameSpace.GitHub).trigger(
+                    new Events.Repository.Error(error, user)
+                );
+            }
         });
     }
 }

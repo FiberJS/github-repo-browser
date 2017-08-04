@@ -98,12 +98,6 @@ repository-item p {
   height: 30px; }
 repository-list {
   display: block; }
-
-repository-list.loading {
-  background-image: url("/bin/octocat-spinner.gif");
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 300px; }
 body {
   font-family: monospace; }
 
@@ -150,3 +144,9 @@ language.cpp, language.c {
 
 language.typescript, language.coffeescript, language.groovy {
   background: magenta; }
+
+.loading {
+  background-image: url("/bin/octocat-spinner.gif");
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 300px; }

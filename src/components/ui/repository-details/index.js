@@ -9,12 +9,12 @@ const repositoryDetailsTemplate = PatchIt.template(
     repositoryDetailsHtml, repositoryDetailsPatch
 );
 
+const EMPTY_STATE = { readme: '' };
+
 class RepositoryDetailsComponent extends Flight.UIComponent {
 
     listen() {
-        this.detailsView = repositoryDetailsTemplate.render({
-            readme: '',
-        });
+        this.detailsView = repositoryDetailsTemplate.render(EMPTY_STATE);
         this.view.append(this.detailsView);
 
         this.on(NameSpace.GitHub).listen(
@@ -24,12 +24,15 @@ class RepositoryDetailsComponent extends Flight.UIComponent {
     }
 
     getRepoDetails(repository) {
+        this.detailsView.className = 'loading';
+        this.detailsView.apply(EMPTY_STATE);
         this.on(NameSpace.GitHub).trigger(
             new Events.Repository.DetailsRequest(repository)
         );
     }
 
     showDetails(details) {
+        this.detailsView.className = '';
         this.detailsView.apply(details);
     }
 }

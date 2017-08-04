@@ -38,3 +38,10 @@ language.html { background: orange; }
 language.python, language.php, language.lua { background: navy; }
 language.cpp, language.c { background: black; }
 language.typescript, language.coffeescript, language.groovy { background: magenta; }
+
+.loading {
+    background-image: url('/bin/octocat-spinner.gif');
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 300px;
+}
