@@ -3,7 +3,7 @@ import Flight from 'flight';
 const ErrorResponse = Flight.eventType(
     function(error, request) {
         this.error = error;
-        this.request =request;
+        this.request = request;
     }
 );
 

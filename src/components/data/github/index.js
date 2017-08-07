@@ -3,8 +3,9 @@ import NameSpace from 'namespace';
 import Events from 'events';
 import jquery from 'jquery';
 
-import usersJson from './users.json';
-import reposJson from './repos.json';
+// for working offline
+// import usersJson from './users.json';
+// import reposJson from './repos.json';
 
 const GITHUB_SEARCH_URL = 'https://api.github.com/search/users';
 const GITHUB_REPO_URL = (user) => `https://api.github.com/users/${user}/repos`;

@@ -1,9 +1,10 @@
+var path = require('path');
+var fs = require('fs');
+
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const extractSass = new ExtractTextPlugin({
     filename: "bundle.css"
 });
-var path = require('path');
-var fs = require('fs');
 
 module.exports = {
   entry:  __dirname + "/src/app.js",
