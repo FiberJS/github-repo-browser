@@ -1,73 +1,55 @@
 import Flight from 'flight';
+import Repository from 'domain/repository';
 
-const ErrorResponse = Flight.eventType(
-    function(error, request) {
-        this.error = error;
-        this.request = request;
-    }
-);
+const ErrorResponse = Flight.defineEventType({
+    error: 'any',
+    request: 'any',
+});
 
-const UserEvent = Flight.eventType(
-    function(user) {
-        this.user = user;
-    }
-);
+const UserEvent = Flight.defineEventType({
+    user: Object
+});
 
-const RepositoryEvent = Flight.eventType(
-    function(repository) {
-        this.repository = repository;
-    }
-);
+const RepositoryEvent = Flight.defineEventType({
+    repository: Object
+});
 
-const RepositoryDetailsEvent = Flight.eventType(
-    function(details) {
-        this.details = details;
-    }
-);
+const RepositoryDetailsEvent = Flight.defineEventType({
+    details: Object
+});
 
-const UserQueryEvent = Flight.eventType(
-    function(query) {
-        this.query = query;
-    }
-);
+const UserQueryEvent = Flight.defineEventType({
+    query: 'string'
+});
 
-const RepositoriesRequest = Flight.eventType(
-    function(user) {
-        this.user = user;
-    }
-);
+const RepositoriesRequest = Flight.defineEventType({
+    user: Object
+});
 
-class ItemListEvent extends Flight.Event {
-    constructor(items) {
-        super();
-        this._items = items;
-    }
-
-    get items() {
-        return this._items.slice();
-    }
-}
+const ItemListEvent = Flight.defineEventType({
+    items: Array
+});
 
 const Events = {};
 
 Events.UserQuery = {};
-Events.UserQuery.Request = Flight.eventOfType(UserQueryEvent).alias('UserQuery:Request');
-Events.UserQuery.Response = Flight.eventOfType(ItemListEvent).alias('UserQuery:Response');
-Events.UserQuery.Error = Flight.eventOfType(ErrorResponse).alias('UserQuery:Error');
+Events.UserQuery.Request = Flight.defineEvent(UserQueryEvent, 'UserQuery:Request');
+Events.UserQuery.Response = Flight.defineEvent(ItemListEvent, 'UserQuery:Response');
+Events.UserQuery.Error = Flight.defineEvent(ErrorResponse, 'UserQuery:Error');
 
 Events.User = {};
-Events.User.Chosen = Flight.eventOfType(UserEvent).alias('User:Chosen');
+Events.User.Chosen = Flight.defineEvent(UserEvent, 'User:Chosen');
 
 Events.Repositories = {};
-Events.Repositories.Request = Flight.eventOfType(RepositoriesRequest).alias('Repositories:Request');
-Events.Repositories.Response = Flight.eventOfType(ItemListEvent).alias('Repositories:Response');
-Events.Repositories.Error = Flight.eventOfType(ErrorResponse).alias('Repositories:Error');
+Events.Repositories.Request = Flight.defineEvent(RepositoriesRequest, 'Repositories:Request');
+Events.Repositories.Response = Flight.defineEvent(ItemListEvent, 'Repositories:Response');
+Events.Repositories.Error = Flight.defineEvent(ErrorResponse, 'Repositories:Error');
 
 Events.Repository = {};
-Events.Repository.Chosen = Flight.eventOfType(RepositoryEvent).alias('Repository:Chosen');
-Events.Repository.DetailsRequest = Flight.eventOfType(RepositoryEvent).alias('Repository:DetailsRequest');
-Events.Repository.DetailsReady = Flight.eventOfType(RepositoryDetailsEvent).alias('Repository:DetailsReady');
-Events.Repository.Error = Flight.eventOfType(ErrorResponse).alias('Repository:Error');
+Events.Repository.Chosen = Flight.defineEvent(RepositoryEvent, 'Repository:Chosen');
+Events.Repository.DetailsRequest = Flight.defineEvent(RepositoryEvent, 'Repository:DetailsRequest');
+Events.Repository.DetailsReady = Flight.defineEvent(RepositoryDetailsEvent, 'Repository:DetailsReady');
+Events.Repository.Error = Flight.defineEvent(ErrorResponse, 'Repository:Error');
 
 import { ShowStepEvent, StepBackEvent } from 'FlowManager/events';
 Events.Flow = {};

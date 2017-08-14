@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 11);
+/******/ 	return __webpack_require__(__webpack_require__.s = 13);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -88,13 +88,17 @@ var _uiComponent2 = _interopRequireDefault(_uiComponent);
 
 var _eventPool = __webpack_require__(3);
 
-var _event = __webpack_require__(12);
+var _event = __webpack_require__(14);
+
+var _clone = __webpack_require__(10);
+
+var _clone2 = _interopRequireDefault(_clone);
 
 var _DOM = __webpack_require__(9);
 
 var _DOM2 = _interopRequireDefault(_DOM);
 
-var _debugger = __webpack_require__(13);
+var _debugger = __webpack_require__(15);
 
 var _debugger2 = _interopRequireDefault(_debugger);
 
@@ -131,9 +135,13 @@ Flight.detachEventPool = _eventPool.detachEventPool;
 // events
 
 Flight.Event = _event.Event;
-Flight.eventType = _event.eventType;
-Flight.eventOfType = _event.eventOfType;
+Flight.defineEvent = _event.defineEvent;
+Flight.defineEventType = _event.defineEventType;
 Flight.basicEvent = _event.basicEvent;
+
+// clone
+
+Flight.clone = _clone2.default;
 
 // DOM
 
@@ -178,89 +186,67 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _flight = __webpack_require__(0);
 
 var _flight2 = _interopRequireDefault(_flight);
 
-var _events = __webpack_require__(10);
+var _repository = __webpack_require__(11);
+
+var _repository2 = _interopRequireDefault(_repository);
+
+var _events = __webpack_require__(12);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var ErrorResponse = _flight2.default.eventType(function (error, request) {
-    this.error = error;
-    this.request = request;
+var ErrorResponse = _flight2.default.defineEventType({
+    error: 'any',
+    request: 'any'
 });
 
-var UserEvent = _flight2.default.eventType(function (user) {
-    this.user = user;
+var UserEvent = _flight2.default.defineEventType({
+    user: Object
 });
 
-var RepositoryEvent = _flight2.default.eventType(function (repository) {
-    this.repository = repository;
+var RepositoryEvent = _flight2.default.defineEventType({
+    repository: Object
 });
 
-var RepositoryDetailsEvent = _flight2.default.eventType(function (details) {
-    this.details = details;
+var RepositoryDetailsEvent = _flight2.default.defineEventType({
+    details: Object
 });
 
-var UserQueryEvent = _flight2.default.eventType(function (query) {
-    this.query = query;
+var UserQueryEvent = _flight2.default.defineEventType({
+    query: 'string'
 });
 
-var RepositoriesRequest = _flight2.default.eventType(function (user) {
-    this.user = user;
+var RepositoriesRequest = _flight2.default.defineEventType({
+    user: Object
 });
 
-var ItemListEvent = function (_Flight$Event) {
-    _inherits(ItemListEvent, _Flight$Event);
-
-    function ItemListEvent(items) {
-        _classCallCheck(this, ItemListEvent);
-
-        var _this = _possibleConstructorReturn(this, (ItemListEvent.__proto__ || Object.getPrototypeOf(ItemListEvent)).call(this));
-
-        _this._items = items;
-        return _this;
-    }
-
-    _createClass(ItemListEvent, [{
-        key: 'items',
-        get: function get() {
-            return this._items.slice();
-        }
-    }]);
-
-    return ItemListEvent;
-}(_flight2.default.Event);
+var ItemListEvent = _flight2.default.defineEventType({
+    items: Array
+});
 
 var Events = {};
 
 Events.UserQuery = {};
-Events.UserQuery.Request = _flight2.default.eventOfType(UserQueryEvent).alias('UserQuery:Request');
-Events.UserQuery.Response = _flight2.default.eventOfType(ItemListEvent).alias('UserQuery:Response');
-Events.UserQuery.Error = _flight2.default.eventOfType(ErrorResponse).alias('UserQuery:Error');
+Events.UserQuery.Request = _flight2.default.defineEvent(UserQueryEvent, 'UserQuery:Request');
+Events.UserQuery.Response = _flight2.default.defineEvent(ItemListEvent, 'UserQuery:Response');
+Events.UserQuery.Error = _flight2.default.defineEvent(ErrorResponse, 'UserQuery:Error');
 
 Events.User = {};
-Events.User.Chosen = _flight2.default.eventOfType(UserEvent).alias('User:Chosen');
+Events.User.Chosen = _flight2.default.defineEvent(UserEvent, 'User:Chosen');
 
 Events.Repositories = {};
-Events.Repositories.Request = _flight2.default.eventOfType(RepositoriesRequest).alias('Repositories:Request');
-Events.Repositories.Response = _flight2.default.eventOfType(ItemListEvent).alias('Repositories:Response');
-Events.Repositories.Error = _flight2.default.eventOfType(ErrorResponse).alias('Repositories:Error');
+Events.Repositories.Request = _flight2.default.defineEvent(RepositoriesRequest, 'Repositories:Request');
+Events.Repositories.Response = _flight2.default.defineEvent(ItemListEvent, 'Repositories:Response');
+Events.Repositories.Error = _flight2.default.defineEvent(ErrorResponse, 'Repositories:Error');
 
 Events.Repository = {};
-Events.Repository.Chosen = _flight2.default.eventOfType(RepositoryEvent).alias('Repository:Chosen');
-Events.Repository.DetailsRequest = _flight2.default.eventOfType(RepositoryEvent).alias('Repository:DetailsRequest');
-Events.Repository.DetailsReady = _flight2.default.eventOfType(RepositoryDetailsEvent).alias('Repository:DetailsReady');
-Events.Repository.Error = _flight2.default.eventOfType(ErrorResponse).alias('Repository:Error');
+Events.Repository.Chosen = _flight2.default.defineEvent(RepositoryEvent, 'Repository:Chosen');
+Events.Repository.DetailsRequest = _flight2.default.defineEvent(RepositoryEvent, 'Repository:DetailsRequest');
+Events.Repository.DetailsReady = _flight2.default.defineEvent(RepositoryDetailsEvent, 'Repository:DetailsReady');
+Events.Repository.Error = _flight2.default.defineEvent(ErrorResponse, 'Repository:Error');
 
 Events.Flow = {};
 Events.Flow.ShowStep = _events.ShowStepEvent;
@@ -11438,6 +11424,87 @@ exports.default = DOM;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.default = clone;
+function clone(obj) {
+    if (!(obj instanceof Object)) {
+        return obj;
+    }
+    if (obj instanceof Array) {
+        return obj.map(function (item) {
+            return clone(item);
+        });
+    }
+    if (obj instanceof Number || obj instanceof String) {
+        return new obj.constructor(obj);
+    }
+
+    var copied = {};
+
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+        for (var _iterator = Object.getOwnPropertyNames(obj)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var key = _step.value;
+
+            if (typeof obj[key] != 'function') {
+                copied[key] = clone(obj[key]);
+            }
+        }
+    } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+    } finally {
+        try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+                _iterator.return();
+            }
+        } finally {
+            if (_didIteratorError) {
+                throw _iteratorError;
+            }
+        }
+    }
+
+    return copied;
+}
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Repository = function Repository(repo) {
+    _classCallCheck(this, Repository);
+
+    this.name = repo.name;
+    this.description = repo.description || '- no description -';
+    this.language = repo.language || '?';
+    this.fork = repo.fork;
+    this.url = repo.url;
+};
+
+exports.default = Repository;
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 exports.StepBackEvent = exports.ShowStepEvent = exports.FlowEvent = undefined;
 
 var _flight = __webpack_require__(0);
@@ -11446,15 +11513,15 @@ var _flight2 = _interopRequireDefault(_flight);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var FlowEvent = exports.FlowEvent = _flight2.default.eventType(function (step) {
-    this.step = step;
+var FlowEvent = exports.FlowEvent = _flight2.default.defineEventType({
+    step: 'string'
 });
 
-var ShowStepEvent = exports.ShowStepEvent = _flight2.default.eventOfType(FlowEvent).alias('Flow-Manager:ShowStep');
-var StepBackEvent = exports.StepBackEvent = _flight2.default.basicEvent().alias('Flow-Manager:Back');
+var ShowStepEvent = exports.ShowStepEvent = _flight2.default.defineEvent(FlowEvent, 'Flow-Manager:ShowStep');
+var StepBackEvent = exports.StepBackEvent = _flight2.default.defineEvent(_flight2.default.basicEvent(), 'Flow-Manager:Back');
 
 /***/ }),
-/* 11 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11472,7 +11539,7 @@ var _events = __webpack_require__(1);
 
 var _events2 = _interopRequireDefault(_events);
 
-var _github = __webpack_require__(14);
+var _github = __webpack_require__(16);
 
 var _github2 = _interopRequireDefault(_github);
 
@@ -11492,25 +11559,25 @@ var _repositoryList = __webpack_require__(29);
 
 var _repositoryList2 = _interopRequireDefault(_repositoryList);
 
-var _repositoryDetails = __webpack_require__(36);
+var _repositoryDetails = __webpack_require__(35);
 
 var _repositoryDetails2 = _interopRequireDefault(_repositoryDetails);
 
-var _users = __webpack_require__(41);
+var _users = __webpack_require__(40);
 
 var _users2 = _interopRequireDefault(_users);
 
-var _repositories = __webpack_require__(42);
+var _repositories = __webpack_require__(41);
 
 var _repositories2 = _interopRequireDefault(_repositories);
 
-var _repository = __webpack_require__(43);
+var _repository = __webpack_require__(42);
 
 var _repository2 = _interopRequireDefault(_repository);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-__webpack_require__(44);
+__webpack_require__(43);
 
 // Debugger
 _flight2.default.Debugger.showEvents = true;
@@ -11545,7 +11612,7 @@ _namespace2.default.GitHub.listen(_events2.default.UserQuery.Error, function (ev
 });
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11554,12 +11621,22 @@ _namespace2.default.GitHub.listen(_events2.default.UserQuery.Error, function (ev
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.Event = undefined;
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-exports.eventType = eventType;
+exports.defineEventType = defineEventType;
 exports.eventOfType = eventOfType;
 exports.basicEvent = basicEvent;
+exports.defineEvent = defineEvent;
+
+var _clone = __webpack_require__(10);
+
+var _clone2 = _interopRequireDefault(_clone);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
@@ -11567,11 +11644,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-/*******************************************************************************
- * Event | eventType | eventOfType | basicEventOf
- **/
-
-var __eventId = 0;
+var eventId = 0;
 
 var Event = function () {
     function Event() {
@@ -11581,7 +11654,7 @@ var Event = function () {
     }
 
     _createClass(Event, [{
-        key: "event",
+        key: 'event',
         value: function event() {
             return new CustomEvent(this.name, {
                 detail: this,
@@ -11590,23 +11663,23 @@ var Event = function () {
             });
         }
     }, {
-        key: "stopPropagation",
+        key: 'stopPropagation',
         value: function stopPropagation() {
             this.originalEvent && this.originalEvent.stopPropagation();
         }
     }, {
-        key: "preventDefault",
+        key: 'preventDefault',
         value: function preventDefault() {
             this.originalEvent && this.originalEvent.preventDefault();
         }
     }], [{
-        key: "bubbles",
+        key: 'bubbles',
         value: function bubbles(_bubbles) {
             this._cancelBubble = !_bubbles;
             return this;
         }
     }, {
-        key: "alias",
+        key: 'alias',
         value: function alias(name) {
             this.EventName = name;
             return this;
@@ -11617,21 +11690,47 @@ var Event = function () {
 }();
 
 exports.Event = Event;
-function eventType(constr) {
+
+var EventAttributeError = function (_Error) {
+    _inherits(EventAttributeError, _Error);
+
+    function EventAttributeError(event, name, value, paramType) {
+        _classCallCheck(this, EventAttributeError);
+
+        var _this = _possibleConstructorReturn(this, (EventAttributeError.__proto__ || Object.getPrototypeOf(EventAttributeError)).call(this, 'Type mismatch for Event \'' + event.name + '\' for attribute \'' + name + '\''));
+
+        _this.event = event;
+        _this.name = name;
+        _this.value = value;
+        _this.paramType = paramType;
+        return _this;
+    }
+
+    return EventAttributeError;
+}(Error);
+
+function defineEventType(descriptor) {
+    var propNames = Object.getOwnPropertyNames(descriptor);
     var EventClass = function (_Event) {
         _inherits(EventClass, _Event);
 
         function EventClass() {
             _classCallCheck(this, EventClass);
 
-            var _this = _possibleConstructorReturn(this, (EventClass.__proto__ || Object.getPrototypeOf(EventClass)).call(this));
+            var _this2 = _possibleConstructorReturn(this, (EventClass.__proto__ || Object.getPrototypeOf(EventClass)).call(this));
 
             for (var _len = arguments.length, params = Array(_len), _key = 0; _key < _len; _key++) {
                 params[_key] = arguments[_key];
             }
 
-            constr.apply(_this, params);
-            return _this;
+            for (var i = 0; i < params.length; i++) {
+                var paramType = descriptor[propNames[i]];
+                if (typeof paramType == 'string' && paramType != 'any' && _typeof(params[i]) != paramType || paramType instanceof Object && !(params[i] instanceof paramType)) {
+                    throw new EventAttributeError(_this2, propNames[i], params[i], paramType);
+                }
+                _this2[propNames[i]] = (0, _clone2.default)(params[i]);
+            }
+            return _this2;
         }
 
         return EventClass;
@@ -11650,7 +11749,7 @@ function eventOfType(EventType) {
         }
 
         return _class;
-    }(EventType).alias("Event" + ++__eventId);
+    }(EventType).alias('Event' + ++eventId);
 };
 
 function basicEvent() {
@@ -11664,11 +11763,15 @@ function basicEvent() {
         }
 
         return _class2;
-    }(Event).alias("Event" + ++__eventId);
+    }(Event).alias('Event' + ++eventId);
+};
+
+function defineEvent(EventType, alias) {
+    return eventOfType(EventType).alias(alias);
 };
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11756,7 +11859,7 @@ function handlerToString(handler) {
 exports.default = Debugger;
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11885,8 +11988,6 @@ var GitHubComponent = function (_Flight$DataComponent) {
 exports.default = GitHubComponent;
 
 /***/ }),
-/* 15 */,
-/* 16 */,
 /* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11903,7 +12004,7 @@ var _flight = __webpack_require__(0);
 
 var _flight2 = _interopRequireDefault(_flight);
 
-var _events = __webpack_require__(10);
+var _events = __webpack_require__(12);
 
 var _jquery = __webpack_require__(4);
 
@@ -12505,7 +12606,7 @@ var _events = __webpack_require__(1);
 
 var _events2 = _interopRequireDefault(_events);
 
-var _repositoryList = __webpack_require__(35);
+var _repositoryList = __webpack_require__(34);
 
 var _repositoryList2 = _interopRequireDefault(_repositoryList);
 
@@ -12616,15 +12717,15 @@ var _events = __webpack_require__(1);
 
 var _events2 = _interopRequireDefault(_events);
 
-var _repository = __webpack_require__(31);
+var _repository = __webpack_require__(11);
 
 var _repository2 = _interopRequireDefault(_repository);
 
-var _repository3 = __webpack_require__(32);
+var _repository3 = __webpack_require__(31);
 
 var _repository4 = _interopRequireDefault(_repository3);
 
-var _repository5 = __webpack_require__(33);
+var _repository5 = __webpack_require__(32);
 
 var _repository6 = _interopRequireDefault(_repository5);
 
@@ -12632,7 +12733,7 @@ var _PatchIt = __webpack_require__(5);
 
 var _PatchIt2 = _interopRequireDefault(_PatchIt);
 
-var _repositoryItem = __webpack_require__(34);
+var _repositoryItem = __webpack_require__(33);
 
 var _repositoryItem2 = _interopRequireDefault(_repositoryItem);
 
@@ -12684,37 +12785,12 @@ exports.default = RepositoryItemComponent;
 
 /***/ }),
 /* 31 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Repository = function Repository(repo) {
-    _classCallCheck(this, Repository);
-
-    this.name = repo.name;
-    this.description = repo.description || '- no description -';
-    this.language = repo.language || '?';
-    this.fork = repo.fork;
-    this.url = repo.url;
-};
-
-exports.default = Repository;
-
-/***/ }),
-/* 32 */
 /***/ (function(module, exports) {
 
 module.exports = "<repository-item>\n    <strong var=\"name\"></strong>\n    <p var=\"description\"></p>\n    <fork title=\"forked repository\"></fork>\n    <language var=\"language\"></language>\n</repository-item>\n";
 
 /***/ }),
-/* 33 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12744,6 +12820,12 @@ function classNameFor(language) {
 }
 
 /***/ }),
+/* 33 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
 /* 34 */
 /***/ (function(module, exports) {
 
@@ -12751,12 +12833,6 @@ function classNameFor(language) {
 
 /***/ }),
 /* 35 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12780,11 +12856,11 @@ var _events = __webpack_require__(1);
 
 var _events2 = _interopRequireDefault(_events);
 
-var _repositoryDetails = __webpack_require__(37);
+var _repositoryDetails = __webpack_require__(36);
 
 var _repositoryDetails2 = _interopRequireDefault(_repositoryDetails);
 
-var _repositoryDetails3 = __webpack_require__(38);
+var _repositoryDetails3 = __webpack_require__(37);
 
 var _repositoryDetails4 = _interopRequireDefault(_repositoryDetails3);
 
@@ -12848,13 +12924,13 @@ var RepositoryDetailsComponent = function (_Flight$UIComponent) {
 exports.default = RepositoryDetailsComponent;
 
 /***/ }),
-/* 37 */
+/* 36 */
 /***/ (function(module, exports) {
 
 module.exports = "<p var=\"readme\"></p>\n";
 
 /***/ }),
-/* 38 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12864,7 +12940,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _marked = __webpack_require__(39);
+var _marked = __webpack_require__(38);
 
 var _marked2 = _interopRequireDefault(_marked);
 
@@ -12880,7 +12956,7 @@ var repositoryDetailsPatch = function repositoryDetailsPatch(view) {
 exports.default = repositoryDetailsPatch;
 
 /***/ }),
-/* 39 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -14170,10 +14246,10 @@ if (true) {
   return this || (typeof window !== 'undefined' ? window : global);
 }());
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(40)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(39)))
 
 /***/ }),
-/* 40 */
+/* 39 */
 /***/ (function(module, exports) {
 
 var g;
@@ -14200,25 +14276,25 @@ module.exports = g;
 
 
 /***/ }),
-/* 41 */
+/* 40 */
 /***/ (function(module, exports) {
 
 module.exports = "<user-search></user-search>\n";
 
 /***/ }),
-/* 42 */
+/* 41 */
 /***/ (function(module, exports) {
 
 module.exports = "<aside>\n    <user-badge></user-badge>\n</aside>\n<main>\n    <repository-list></repository-list>\n</main>\n";
 
 /***/ }),
-/* 43 */
+/* 42 */
 /***/ (function(module, exports) {
 
 module.exports = "<aside>\n    <user-badge></user-badge>\n</aside>\n<main>\n    <repository-details></repository-details>\n</main>\n";
 
 /***/ }),
-/* 44 */
+/* 43 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

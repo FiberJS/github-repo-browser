@@ -60,6 +60,7 @@ describe('GitHubComponent', () => {
             expect(lastTriggered).not.to.be(null);
             expect(lastTriggered.items.length).to.equal(items.length);
         });
+
         it("should respond with Repositories:Error on failure", () => {
             const user = aUser('test');
             const error = 'some error';
@@ -73,7 +74,7 @@ describe('GitHubComponent', () => {
             const lastTriggered = Events.Repositories.Error.last();
             expect(lastTriggered).not.to.be(null);
             expect(lastTriggered.error).to.equal(error);
-            expect(lastTriggered.request).to.equal(user);
+            expect(lastTriggered.request.login).to.equal(user.login);
         });
     });
 });
