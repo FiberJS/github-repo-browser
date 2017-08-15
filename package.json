@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/karma/bin/karma start --single-run",
-    "start": "node ./node_modules/webpack/bin/webpack.js && ./node_modules/http-server/bin/http-server ./ -p \"$PORT\""
+    "start": "node ./node_modules/webpack/bin/webpack.js && ./node_modules/http-server/bin/http-server ./"
   },
   "repository": {
     "type": "git",
