@@ -7,49 +7,45 @@ const ErrorResponse = Flight.defineEventType({
     request: 'any',
 });
 
-const UserEvent = Flight.defineEventType({
+const UserEventType = Flight.defineEventType({
     user: User
 });
 
-const RepositoryEvent = Flight.defineEventType({
+const RepositoryEventType = Flight.defineEventType({
     repository: Repository
 });
 
-const RepositoryDetailsEvent = Flight.defineEventType({
+const RepositoryDetails = Flight.defineEventType({
     details: Object
 });
 
-const UserQueryEvent = Flight.defineEventType({
+const UserQuery = Flight.defineEventType({
     query: 'string'
 });
 
-const RepositoriesRequest = Flight.defineEventType({
-    user: Object
-});
-
-const ItemListEvent = Flight.defineEventType({
+const ItemsResponse = Flight.defineEventType({
     items: Array
 });
 
 const Events = {};
 
 Events.UserQuery = {};
-Events.UserQuery.Request = Flight.defineEvent(UserQueryEvent, 'UserQuery:Request');
-Events.UserQuery.Response = Flight.defineEvent(ItemListEvent, 'UserQuery:Response');
+Events.UserQuery.Request = Flight.defineEvent(UserQuery, 'UserQuery:Request');
+Events.UserQuery.Response = Flight.defineEvent(ItemsResponse, 'UserQuery:Response');
 Events.UserQuery.Error = Flight.defineEvent(ErrorResponse, 'UserQuery:Error');
 
 Events.User = {};
-Events.User.Chosen = Flight.defineEvent(UserEvent, 'User:Chosen');
+Events.User.Chosen = Flight.defineEvent(UserEventType, 'User:Chosen');
 
 Events.Repositories = {};
-Events.Repositories.Request = Flight.defineEvent(RepositoriesRequest, 'Repositories:Request');
-Events.Repositories.Response = Flight.defineEvent(ItemListEvent, 'Repositories:Response');
+Events.Repositories.Request = Flight.defineEvent(UserEventType, 'Repositories:Request');
+Events.Repositories.Response = Flight.defineEvent(ItemsResponse, 'Repositories:Response');
 Events.Repositories.Error = Flight.defineEvent(ErrorResponse, 'Repositories:Error');
 
 Events.Repository = {};
-Events.Repository.Chosen = Flight.defineEvent(RepositoryEvent, 'Repository:Chosen');
-Events.Repository.DetailsRequest = Flight.defineEvent(RepositoryEvent, 'Repository:DetailsRequest');
-Events.Repository.DetailsReady = Flight.defineEvent(RepositoryDetailsEvent, 'Repository:DetailsReady');
+Events.Repository.Chosen = Flight.defineEvent(RepositoryEventType, 'Repository:Chosen');
+Events.Repository.DetailsRequest = Flight.defineEvent(RepositoryEventType, 'Repository:DetailsRequest');
+Events.Repository.DetailsReady = Flight.defineEvent(RepositoryDetails, 'Repository:DetailsReady');
 Events.Repository.Error = Flight.defineEvent(ErrorResponse, 'Repository:Error');
 
 import { ShowStepEvent, StepBackEvent } from 'FlowManager/events';
