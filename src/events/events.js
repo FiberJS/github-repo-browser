@@ -1,5 +1,6 @@
 import Flight from 'flight';
 import Repository from 'domain/repository';
+import User from 'domain/user';
 
 const ErrorResponse = Flight.defineEventType({
     error: 'any',
@@ -7,11 +8,11 @@ const ErrorResponse = Flight.defineEventType({
 });
 
 const UserEvent = Flight.defineEventType({
-    user: Object
+    user: User
 });
 
 const RepositoryEvent = Flight.defineEventType({
-    repository: Object
+    repository: Repository
 });
 
 const RepositoryDetailsEvent = Flight.defineEventType({

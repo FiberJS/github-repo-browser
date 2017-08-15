@@ -17,7 +17,7 @@ class RepositoryItemComponent extends Flight.UIComponent {
     }
 
     listen() {
-        this.ui(this.view).listen(
+        this.ui().listen(
             'click', () => this.choose(),
         );
     }

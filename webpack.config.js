@@ -62,10 +62,9 @@ module.exports = {
       FlowManager: path.resolve(__dirname, 'node_modules/flow-manager/src'),
       components: path.resolve(__dirname, 'src/components'),
       domain: path.resolve(__dirname, 'src/domain'),
-      events: path.resolve(__dirname, 'src/events'),
-      namespace: path.resolve(__dirname, 'src/namespace'),
+      events: path.resolve(__dirname, 'src/events/events'),
+      namespace: path.resolve(__dirname, 'src/namespace/namespace'),
       pages: path.resolve(__dirname, 'src/pages'),
-      repositories: path.resolve(__dirname, 'src/repositories'),
     }
   },
   externals: [

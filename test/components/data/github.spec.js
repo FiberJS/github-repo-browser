@@ -1,4 +1,4 @@
-import GitHubComponent from 'components/data/github';
+import GitHubComponent from 'components/data/github/github.js';
 import NameSpace from 'namespace';
 import Flight from 'flight';
 import helper from 'flight/test';

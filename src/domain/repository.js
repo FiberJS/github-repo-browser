@@ -8,6 +8,10 @@ class Repository {
         this.fork = repo.fork;
         this.url = repo.url;
     }
+
+    clone() {
+        return new Repository(this);
+    }
 }
 
 export default Repository;

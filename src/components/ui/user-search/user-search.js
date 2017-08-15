@@ -1,6 +1,6 @@
 import Flight from 'flight';
 import NameSpace from 'namespace';
-import UserItemComponent from 'components/ui/user-item';
+import UserItemComponent from 'components/ui/user-item/user-item.js';
 import Events from 'events';
 import jquery from 'jquery';
 import debounce from 'debounce';

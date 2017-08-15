@@ -2,8 +2,8 @@ import Flight from 'flight';
 import Events from 'events';
 
 const NameSpace = {
-    System : Flight.getOrCreateEventPool('data/system'),
-    GitHub : Flight.getOrCreateEventPool('data/github'),
+    System : Flight.namespace('data/system'),
+    GitHub : Flight.namespace('data/github'),
 };
 
 NameSpace.GitHub.defineState({
