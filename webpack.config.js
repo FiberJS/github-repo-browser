@@ -58,7 +58,7 @@ module.exports = {
     extensions: ['.scss', '.js', '.html'],
     alias: {
       flight: path.resolve(__dirname, 'node_modules/framework-concept/flight'),
-      PatchIt: path.resolve(__dirname, 'node_modules/PatchIt'),
+      PatchIt: path.resolve(__dirname, 'node_modules/patchit'),
       FlowManager: path.resolve(__dirname, 'node_modules/flow-manager/src'),
       components: path.resolve(__dirname, 'src/components'),
       domain: path.resolve(__dirname, 'src/domain'),
