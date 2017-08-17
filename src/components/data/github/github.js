@@ -26,9 +26,11 @@ class GitHubComponent extends Flight.DataComponent {
         jquery.getJSON(
             GITHUB_SEARCH_URL,
             { q: query }
-        ).done(response => {
+        ).done((data, status, response) => {
+            const links = parseLinks(response.getResponseHeader('Link'));
+            console.log(links);
             this.on(NameSpace.GitHub).trigger(
-                new Events.UserQuery.Response(response.items)
+                new Events.UserQuery.Response(data.items)
             );
         }).fail(error => {
             this.on(NameSpace.GitHub).trigger(
@@ -90,3 +92,18 @@ class GitHubComponent extends Flight.DataComponent {
 }
 
 export default GitHubComponent;
+
+function parseLinks(linkHeader) {
+    if (!linkHeader || linkHeader.length == 0) {
+        return {};
+    }
+    var links = {};
+    linkHeader.split(',').forEach( part => {
+        var section = part.split(';');
+        var url = section[0].replace(/<(.*)>/, '$1').trim();
+        var name = section[1].replace(/rel="(.*)"/, '$1').trim();
+        links[name] = url;
+    });
+
+    return links;
+}

@@ -2,9 +2,10 @@ import Flight from 'flight';
 import Repository from 'domain/repository';
 import User from 'domain/user';
 
+const Any = 'any';
 const ErrorResponse = Flight.defineEventType({
-    error: 'any',
-    request: 'any',
+    error: Any,
+    request: Any,
 });
 
 const UserEventType = Flight.defineEventType({
@@ -24,7 +25,8 @@ const UserQuery = Flight.defineEventType({
 });
 
 const ItemsResponse = Flight.defineEventType({
-    items: Array
+    items: Array,
+    links: Any
 });
 
 const Events = {};

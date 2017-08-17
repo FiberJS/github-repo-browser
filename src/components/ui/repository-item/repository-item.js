@@ -1,10 +1,10 @@
 import Flight from 'flight';
 import NameSpace from 'namespace';
 import Events from 'events';
+import PatchIt from 'patchit';
 import Repository from 'domain/repository';
 import repositoryHtml from './repository.html';
 import repositoryPatch from './repository.patch';
-import PatchIt from 'PatchIt';
 import styles from './repository-item.scss';
 
 const repositoryTemplate = PatchIt.template(repositoryHtml, repositoryPatch);
