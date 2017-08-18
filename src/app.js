@@ -4,6 +4,7 @@ import Events from 'events';
 import GitHubComponent from 'components/data/github/github';
 import FlowManagerComponent from 'FlowManager';
 import UserSearchComponent from 'components/ui/user-search/user-search.js';
+import UserListComponent from 'components/ui/user-list/user-list.js';
 import UserBadgeComponent from 'components/ui/user-badge/user-badge.js';
 import RepositoryListComponent from 'components/ui/repository-list/repository-list.js';
 import RepositoryDetailsComponent from 'components/ui/repository-details/repository-details.js';
@@ -27,7 +28,7 @@ Flight.app(() => {
         .addStep({
             name: 'users',
             template: Flight.DOM.renderWithComponents(usersTemplate,
-                UserSearchComponent
+                UserSearchComponent, UserListComponent
             ),
         })
         .addStep({

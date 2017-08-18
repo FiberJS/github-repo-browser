@@ -7,11 +7,9 @@ import styles from './user-badge.scss';
 const $ = jquery;
 
 
-class UserBadgeComponent extends Flight.UIComponent {
+class UserBadgeComponent extends Flight.UIComponent.withTemplate(template) {
 
     listen() {
-        this.renderTemplate();
-
         this.on(NameSpace.GitHub).listen(
             Events.User.Chosen, event => this.loadUser(event.user),
         );
@@ -19,10 +17,6 @@ class UserBadgeComponent extends Flight.UIComponent {
         this.ui().listen(
             'click', event => this.stepBack(),
         );
-    }
-
-    renderTemplate() {
-        this.view.innerHTML = template;
     }
 
     loadUser(user) {

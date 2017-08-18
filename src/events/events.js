@@ -29,10 +29,15 @@ const ItemsResponse = Flight.defineEventType({
     links: Any
 });
 
+const PageRequest = Flight.defineEventType({
+    pageUri: 'string'
+});
+
 const Events = {};
 
 Events.UserQuery = {};
 Events.UserQuery.Request = Flight.defineEvent(UserQuery, 'UserQuery:Request');
+Events.UserQuery.PageRequest = Flight.defineEvent(PageRequest, 'UserQuery:PageRequest');
 Events.UserQuery.Response = Flight.defineEvent(ItemsResponse, 'UserQuery:Response');
 Events.UserQuery.Error = Flight.defineEvent(ErrorResponse, 'UserQuery:Error');
 
@@ -41,6 +46,7 @@ Events.User.Chosen = Flight.defineEvent(UserEventType, 'User:Chosen');
 
 Events.Repositories = {};
 Events.Repositories.Request = Flight.defineEvent(UserEventType, 'Repositories:Request');
+Events.Repositories.PageRequest = Flight.defineEvent(PageRequest, 'Repositories:PageRequest');
 Events.Repositories.Response = Flight.defineEvent(ItemsResponse, 'Repositories:Response');
 Events.Repositories.Error = Flight.defineEvent(ErrorResponse, 'Repositories:Error');
 

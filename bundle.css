@@ -1,3 +1,17 @@
+user-search img {
+  width: 120px;
+  border-radius: 10px; }
+
+#search-query {
+  width: 100px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  border-bottom-right-radius: 10px;
+  font-size: 16px;
+  font-family: monospace; }
+
+#search-query:focus {
+  outline: 0; }
 user-list user-item {
   float: left;
   width: 200px;
@@ -26,24 +40,24 @@ user-list user-item:hover .avatar {
 user-list user-item login {
   font-size: 16px;
   vertical-align: 15px; }
-user-search img {
-  width: 120px;
-  border-radius: 10px; }
+item-list {
+  display: block; }
 
-#search-query {
-  width: 100px;
-  border: none;
-  border-bottom: 1px solid #ddd;
-  border-bottom-right-radius: 10px;
-  font-size: 16px;
-  font-family: monospace; }
-
-#search-query:focus {
-  outline: 0; }
-
-user-list {
+page-links {
   display: block;
-  margin-top: 10px; }
+  clear: both;
+  padding: 0 10px;
+  margin-bottom: 20px; }
+  page-links a {
+    color: #999;
+    cursor: not-allowed; }
+    page-links a:visited {
+      color: #999; }
+    page-links a.active {
+      color: navy;
+      cursor: pointer; }
+user-list {
+  display: block; }
 user-badge {
   cursor: pointer; }
 
