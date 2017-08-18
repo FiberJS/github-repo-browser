@@ -7,7 +7,7 @@ import jquery from 'jquery';
 // import usersJson from './users.json';
 // import reposJson from './repos.json';
 
-const GITHUB_SEARCH_URL = 'https://api.github.com/search/users';
+const GITHUB_SEARCH_URL = (query) => `https://api.github.com/search/users?q=${query}`;
 const GITHUB_REPO_URL = (user) => `https://api.github.com/users/${user}/repos`;
 const GITHUB_README_URL = (user, repo) => `https://api.github.com/repos/${user}/${repo}/readme`;
 const MISSING_README = (repoName) => `# ${repoName}\n-- No information provided --`;
@@ -16,23 +16,36 @@ class GitHubComponent extends Flight.DataComponent {
 
     listen() {
         this.on(NameSpace.GitHub).listen(
-            Events.UserQuery.Request, event => this.queryUsers(event.query),
-            Events.Repositories.Request, event => this.getRepositories(event.user),
-            Events.Repository.DetailsRequest, event => this.getRepository(event.repository),
+            Events.UserQuery.Request,
+                event => this.processPage(GITHUB_SEARCH_URL(event.query), Events.UserQuery),
+
+            Events.UserQuery.PageRequest,
+                event => this.processPage(event.pageUri, Events.UserQuery),
+
+            Events.Repositories.Request,
+                event => this.processPage(GITHUB_REPO_URL(event.user.login), Events.Repositories),
+
+            Events.Repositories.PageRequest,
+                event => this.processPage(event.pageUri, Events.Repositories),
+
+            Events.Repository.DetailsRequest,
+                event => this.getRepository(event.repository),
         );
     }
 
-    queryUsers(query) {
+    processPage(pageUri, EventParent) {
         jquery.getJSON(
-            GITHUB_SEARCH_URL,
-            { q: query }
-        ).done(response => {
+            pageUri
+        ).done((data, status, response) => {
+            const links = parseLinks(response.getResponseHeader('Link'));
             this.on(NameSpace.GitHub).trigger(
-                new Events.UserQuery.Response(response.items)
+                new EventParent.Response(
+                    data instanceof Array ? data : data.items, links
+                )
             );
         }).fail(error => {
             this.on(NameSpace.GitHub).trigger(
-                new Events.UserQuery.Error(error, query)
+                new EventParent.Error(error, pageUri)
             );
         });
     }
@@ -90,3 +103,18 @@ class GitHubComponent extends Flight.DataComponent {
 }
 
 export default GitHubComponent;
+
+function parseLinks(linkHeader) {
+    if (!linkHeader || linkHeader.length == 0) {
+        return {};
+    }
+    var links = {};
+    linkHeader.split(',').forEach( part => {
+        var section = part.split(';');
+        var url = section[0].replace(/<(.*)>/, '$1').trim();
+        var name = section[1].replace(/rel="(.*)"/, '$1').trim();
+        links[name] = url;
+    });
+
+    return links;
+}

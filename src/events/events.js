@@ -2,9 +2,10 @@ import Flight from 'flight';
 import Repository from 'domain/repository';
 import User from 'domain/user';
 
+const Any = 'any';
 const ErrorResponse = Flight.defineEventType({
-    error: 'any',
-    request: 'any',
+    error: Any,
+    request: Any,
 });
 
 const UserEventType = Flight.defineEventType({
@@ -24,13 +25,19 @@ const UserQuery = Flight.defineEventType({
 });
 
 const ItemsResponse = Flight.defineEventType({
-    items: Array
+    items: Array,
+    links: Any
+});
+
+const PageRequest = Flight.defineEventType({
+    pageUri: 'string'
 });
 
 const Events = {};
 
 Events.UserQuery = {};
 Events.UserQuery.Request = Flight.defineEvent(UserQuery, 'UserQuery:Request');
+Events.UserQuery.PageRequest = Flight.defineEvent(PageRequest, 'UserQuery:PageRequest');
 Events.UserQuery.Response = Flight.defineEvent(ItemsResponse, 'UserQuery:Response');
 Events.UserQuery.Error = Flight.defineEvent(ErrorResponse, 'UserQuery:Error');
 
@@ -39,6 +46,7 @@ Events.User.Chosen = Flight.defineEvent(UserEventType, 'User:Chosen');
 
 Events.Repositories = {};
 Events.Repositories.Request = Flight.defineEvent(UserEventType, 'Repositories:Request');
+Events.Repositories.PageRequest = Flight.defineEvent(PageRequest, 'Repositories:PageRequest');
 Events.Repositories.Response = Flight.defineEvent(ItemsResponse, 'Repositories:Response');
 Events.Repositories.Error = Flight.defineEvent(ErrorResponse, 'Repositories:Error');
 

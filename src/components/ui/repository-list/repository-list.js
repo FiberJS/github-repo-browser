@@ -1,42 +1,44 @@
 import Flight from 'flight';
 import NameSpace from 'namespace';
 import RepositoryItemComponent from 'components/ui/repository-item/repository-item.js';
+import PaginatedListComponent from 'components/ui/paginated-list/paginated-list.js';
 import Events from 'events';
 import styles from './repository-list.scss';
-
-const EMPTY_TEXT = "No repositories :(";
 
 class RepositoryListComponent extends Flight.UIComponent {
 
     listen() {
+        this.paginatedList = PaginatedListComponent.attachTo(
+            this.view, item => (new RepositoryItemComponent(item)).render()
+        );
+
         this.on(NameSpace.GitHub).listen(
             Events.User.Chosen, event => this.requestRepositories(event.user),
+            Events.Repositories.Response, event => this.showUsers(event),
         );
-        this.on(NameSpace.GitHub).listen(
-            Events.Repositories.Response, event => this.showRepositories(event.items),
+
+        this.ui().listen(
+            PaginatedListComponent.Events.PageEvent, event => this.paginate(event),
         );
     }
 
     requestRepositories(user) {
-        this.clearItems();
-        this.view.className = 'loading';
+        this.paginatedList.loadingState();
         this.on(NameSpace.GitHub).trigger(
             new Events.Repositories.Request(user)
         );
     }
 
-    clearItems(placeHolder) {
-        this.view.innerHTML = placeHolder || '';
+    showUsers(event) {
+        this.paginatedList.renderItems(
+            event.items, event.links
+        );
     }
 
-    showRepositories(items) {
-        this.view.className = '';
-        this.clearItems(items.length ? '' : EMPTY_TEXT);
-
-        for(let item of items) {
-            const repository = new RepositoryItemComponent(item);
-            this.view.appendChild(repository.render());
-        }
+    paginate(pageEvent) {
+        this.on(NameSpace.GitHub).trigger(
+            new Events.Repositories.PageRequest(pageEvent.data)
+        );
     }
 }
 

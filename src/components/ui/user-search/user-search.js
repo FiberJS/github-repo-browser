@@ -1,6 +1,5 @@
 import Flight from 'flight';
 import NameSpace from 'namespace';
-import UserItemComponent from 'components/ui/user-item/user-item.js';
 import Events from 'events';
 import jquery from 'jquery';
 import debounce from 'debounce';
@@ -10,43 +9,20 @@ const $ = jquery;
 
 const ENTER = 13;
 
-class UserSearchComponent extends Flight.UIComponent {
+class UserSearchComponent extends Flight.UIComponent.withTemplate(template) {
 
     listen() {
-        this.renderTemplate();
-
         this.$searchBar = $('#search-query', this.view);
-        this.$userList = $('user-list', this.view);
         const debouncedKeyPress = debounce(()=>this.onKeyPress(), 400);
 
         this.on(NameSpace.System).listen(
             Flight.System.Ready, event => this.$searchBar.focus(),
         );
-        this.on(NameSpace.GitHub).listen(
-            Events.UserQuery.Response, event => this.showUsers(event.items),
-        );
         this.ui('#search-query').listen(
-            'keyup change paste', event => debouncedKeyPress(),
+            'keyup paste', event => debouncedKeyPress(),
         );
 
         this.onKeyPress();
-    }
-
-    renderTemplate() {
-        this.view.innerHTML = template;
-    }
-
-    clearUsers() {
-        this.$userList.html('');
-    }
-
-    showUsers(users) {
-        this.clearUsers();
-
-        for(let user of users) {
-            const userItem = new UserItemComponent(user);
-            this.$userList.append(userItem.render());
-        }
     }
 
     onKeyPress(event) {

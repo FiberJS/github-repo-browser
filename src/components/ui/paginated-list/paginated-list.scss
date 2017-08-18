@@ -1,0 +1,24 @@
+item-list {
+    display: block;
+}
+
+page-links {
+    display: block;
+    clear: both;
+    padding: 0 10px;
+    margin-bottom: 20px;
+
+    a {
+        color: #999;
+        cursor: not-allowed;
+
+        &:visited {
+            color: #999;
+        }
+
+        &.active {
+            color: navy;
+            cursor: pointer;
+        }
+    }
+}
