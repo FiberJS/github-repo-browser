@@ -36,9 +36,9 @@
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.6",
     "webpack": "^3.4.1",
-    "patchit": "git+https://github.com/jsbuzz/PatchIt.git",
+    "patchit": "git+https://github.com/jsbuzz/PatchIt.git#38581a91bf72638c91d33c702711790924d9296f",
     "debounce": "^1.0.2",
-    "framework-concept": "git+https://github.com/jsbuzz/framework-concept.git",
+    "framework-concept": "git+https://github.com/jsbuzz/framework-concept.git#8c49095bab501a3e02401ba0205d06d839a70518",
     "flow-manager": "git+https://github.com/jsbuzz/3flight-flow-manager.git",
     "jquery": "^3.2.1",
     "marked": "^0.3.6"
