@@ -1,9 +1,9 @@
-import Flight from 'flight';
+import Fiber from 'fiber';
 import PatchIt from 'patchit';
 import template from './paginated-list.html';
 import style from './paginated-list.scss';
 
-class PaginatedListComponent extends Flight.UIComponent.withTemplate(template) {
+class PaginatedListComponent extends Fiber.UIComponent.withTemplate(template) {
 
     init(renderItem) {
         this.renderItem = renderItem;
@@ -27,7 +27,7 @@ class PaginatedListComponent extends Flight.UIComponent.withTemplate(template) {
     }
 
     loadingState() {
-        console.log('loadingState');
+        this.cleanUp();
         this.view.$.list.className = 'loading';
     }
 
@@ -65,13 +65,13 @@ class PaginatedListComponent extends Flight.UIComponent.withTemplate(template) {
     }
 }
 
-const PageEvent = Flight.defineEventType({
+const PageEvent = Fiber.defineEventType({
     page: 'string',
     data: 'any',
 });
 
 PaginatedListComponent.Events = {
-    PageEvent : Flight.defineEvent(PageEvent, 'Pagination:PageRequest'),
+    PageEvent : Fiber.defineEvent(PageEvent, 'Pagination:PageRequest'),
 };
 
 export default PaginatedListComponent;

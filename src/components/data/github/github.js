@@ -1,4 +1,4 @@
-import Flight from 'flight';
+import Fiber from 'fiber';
 import NameSpace from 'namespace';
 import Events from 'events';
 import jquery from 'jquery';
@@ -12,7 +12,7 @@ const GITHUB_REPO_URL = (user) => `https://api.github.com/users/${user}/repos`;
 const GITHUB_README_URL = (user, repo) => `https://api.github.com/repos/${user}/${repo}/readme`;
 const MISSING_README = (repoName) => `# ${repoName}\n-- No information provided --`;
 
-class GitHubComponent extends Flight.DataComponent {
+class GitHubComponent extends Fiber.DataComponent {
 
     listen() {
         this.on(NameSpace.GitHub).listen(

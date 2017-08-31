@@ -21,7 +21,7 @@ module.exports = {
         },
         {
           test: /\.js$/,
-          include: /node_modules\/framework-concept/,
+          include: /node_modules\/fiber-framework/,
           loader: 'babel-loader?presets[]=es2015'
         },
         {
@@ -57,7 +57,7 @@ module.exports = {
   resolve: {
     extensions: ['.scss', '.js', '.html'],
     alias: {
-      flight: path.resolve(__dirname, 'node_modules/framework-concept/flight'),
+      fiber: path.resolve(__dirname, 'node_modules/fiber-framework/src'),
       PatchIt: path.resolve(__dirname, 'node_modules/patchit'),
       FlowManager: path.resolve(__dirname, 'node_modules/flow-manager/src'),
       components: path.resolve(__dirname, 'src/components'),

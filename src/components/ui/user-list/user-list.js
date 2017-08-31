@@ -1,11 +1,11 @@
-import Flight from 'flight';
+import Fiber from 'fiber';
 import NameSpace from 'namespace';
 import UserItemComponent from 'components/ui/user-item/user-item.js';
 import PaginatedListComponent from 'components/ui/paginated-list/paginated-list.js';
 import Events from 'events';
 import styles from './user-list.scss';
 
-class UserListComponent extends Flight.UIComponent {
+class UserListComponent extends Fiber.UIComponent {
 
     listen() {
         this.paginatedList = PaginatedListComponent.attachTo(

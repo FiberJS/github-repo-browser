@@ -1,5 +1,5 @@
 # github-repo-browser
-Sample app to showcase and develop the 3Flight framework.
+Sample app to showcase and develop the Fiber framework.
 
 Online demo: https://github-repo-buzzer.herokuapp.com
 

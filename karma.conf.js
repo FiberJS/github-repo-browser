@@ -71,7 +71,7 @@ module.exports = function(config) {
       resolve: {
         extensions: ['.scss', '.js', '.html'],
         alias: {
-          flight: path.resolve(__dirname, 'node_modules/framework-concept/flight'),
+          fiber: path.resolve(__dirname, 'node_modules/framework-concept/src'),
           PatchIt: path.resolve(__dirname, 'node_modules/PatchIt'),
           FlowManager: path.resolve(__dirname, 'node_modules/flow-manager/src'),
           components: path.resolve(__dirname, 'src/components'),

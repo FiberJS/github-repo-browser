@@ -1,4 +1,4 @@
-import Flight from 'flight';
+import Fiber from 'fiber';
 import NameSpace from 'namespace';
 import Events from 'events';
 import repositoryDetailsHtml from './repository-details.html';
@@ -11,7 +11,7 @@ const repositoryDetailsTemplate = PatchIt.template(
 
 const EMPTY_STATE = { readme: '' };
 
-class RepositoryDetailsComponent extends Flight.UIComponent {
+class RepositoryDetailsComponent extends Fiber.UIComponent {
 
     listen() {
         this.detailsView = repositoryDetailsTemplate.render(EMPTY_STATE);

@@ -1,4 +1,4 @@
-import Flight from 'flight';
+import Fiber from 'fiber';
 import NameSpace from 'namespace';
 import Events from 'events';
 import GitHubComponent from 'components/data/github/github';
@@ -15,11 +15,11 @@ import repositoryTemplate from 'pages/repository.html';
 require('./app.scss');
 
 // Debugger
-Flight.Debugger.showEvents = true;
-// Flight.Debugger.showView = true;
-Flight.Debugger.init();
+Fiber.Debugger.showEvents = true;
+// Fiber.Debugger.showView = true;
+Fiber.Debugger.init();
 
-Flight.app(() => {
+Fiber.app(() => {
     // data components
     GitHubComponent.attachTo(NameSpace.GitHub);
 
@@ -27,13 +27,13 @@ Flight.app(() => {
     FlowManagerComponent.attachTo('flow-manager')
         .addStep({
             name: 'users',
-            template: Flight.DOM.renderWithComponents(usersTemplate,
+            template: Fiber.DOM.renderWithComponents(usersTemplate,
                 UserSearchComponent, UserListComponent
             ),
         })
         .addStep({
             name: 'repositories',
-            template: Flight.DOM.renderWithComponents(repositoriesTemplate,
+            template: Fiber.DOM.renderWithComponents(repositoriesTemplate,
                 UserBadgeComponent, RepositoryListComponent
             ),
             nameSpace: NameSpace.GitHub,
@@ -41,7 +41,7 @@ Flight.app(() => {
         })
         .addStep({
             name: 'repository',
-            template: Flight.DOM.renderWithComponents(repositoryTemplate,
+            template: Fiber.DOM.renderWithComponents(repositoryTemplate,
                 UserBadgeComponent, RepositoryDetailsComponent
             ),
             nameSpace: NameSpace.GitHub,
@@ -51,7 +51,7 @@ Flight.app(() => {
 });
 
 // debugging
-window.Flight = Flight;
+window.Fiber = Fiber;
 NameSpace.GitHub.listen(
     Events.UserQuery.Error, event => {
         console.log(event);

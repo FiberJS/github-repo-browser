@@ -1,4 +1,4 @@
-import Flight from 'flight';
+import Fiber from 'fiber';
 import NameSpace from 'namespace';
 import Events from 'events';
 import jquery from 'jquery';
@@ -7,7 +7,7 @@ import styles from './user-badge.scss';
 const $ = jquery;
 
 
-class UserBadgeComponent extends Flight.UIComponent.withTemplate(template) {
+class UserBadgeComponent extends Fiber.UIComponent.withTemplate(template) {
 
     listen() {
         this.on(NameSpace.GitHub).listen(

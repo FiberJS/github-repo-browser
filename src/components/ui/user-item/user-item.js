@@ -1,4 +1,4 @@
-import Flight from 'flight';
+import Fiber from 'fiber';
 import NameSpace from 'namespace';
 import Events from 'events';
 import User from 'domain/user';
@@ -9,7 +9,7 @@ import styles from './user-item.scss';
 
 const userTemplate = PatchIt.template(userHtml, userPatch);
 
-class UserItemComponent extends Flight.UIComponent {
+class UserItemComponent extends Fiber.UIComponent {
 
     init(user) {
         this.user = new User(user);

@@ -1,9 +1,9 @@
-import Flight from 'flight';
+import Fiber from 'fiber';
 import Events from 'events';
 
 const NameSpace = {
-    System : Flight.namespace('data/system'),
-    GitHub : Flight.namespace('data/github'),
+    System : Fiber.namespace('data/system'),
+    GitHub : Fiber.namespace('data/github'),
 };
 
 NameSpace.GitHub.defineState({

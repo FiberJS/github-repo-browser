@@ -1,11 +1,11 @@
-import Flight from 'flight';
+import Fiber from 'fiber';
 import NameSpace from 'namespace';
 import RepositoryItemComponent from 'components/ui/repository-item/repository-item.js';
 import PaginatedListComponent from 'components/ui/paginated-list/paginated-list.js';
 import Events from 'events';
 import styles from './repository-list.scss';
 
-class RepositoryListComponent extends Flight.UIComponent {
+class RepositoryListComponent extends Fiber.UIComponent {
 
     listen() {
         this.paginatedList = PaginatedListComponent.attachTo(

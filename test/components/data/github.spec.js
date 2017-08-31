@@ -1,6 +1,6 @@
 import GitHubComponent from 'components/data/github/github.js';
 import NameSpace from 'namespace';
-import Flight from 'flight/test';
+import Fiber from 'fiber/test';
 import Events from 'events';
 import jquery from 'jquery';
 

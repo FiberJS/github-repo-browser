@@ -1,4 +1,4 @@
-import Flight from 'flight';
+import Fiber from 'fiber';
 import NameSpace from 'namespace';
 import Events from 'events';
 import PatchIt from 'patchit';
@@ -9,7 +9,7 @@ import styles from './repository-item.scss';
 
 const repositoryTemplate = PatchIt.template(repositoryHtml, repositoryPatch);
 
-class RepositoryItemComponent extends Flight.UIComponent {
+class RepositoryItemComponent extends Fiber.UIComponent {
 
     init(repository) {
         this.repository = new Repository(repository);

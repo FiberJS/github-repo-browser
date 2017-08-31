@@ -1,60 +1,60 @@
-import Flight from 'flight';
+import Fiber from 'fiber';
 import Repository from 'domain/repository';
 import User from 'domain/user';
 
 const Any = 'any';
-const ErrorResponse = Flight.defineEventType({
+const ErrorResponse = Fiber.defineEventType({
     error: Any,
     request: Any,
 });
 
-const UserEventType = Flight.defineEventType({
+const UserEventType = Fiber.defineEventType({
     user: User
 });
 
-const RepositoryEventType = Flight.defineEventType({
+const RepositoryEventType = Fiber.defineEventType({
     repository: Repository
 });
 
-const RepositoryDetails = Flight.defineEventType({
+const RepositoryDetails = Fiber.defineEventType({
     details: Object
 });
 
-const UserQuery = Flight.defineEventType({
+const UserQuery = Fiber.defineEventType({
     query: 'string'
 });
 
-const ItemsResponse = Flight.defineEventType({
+const ItemsResponse = Fiber.defineEventType({
     items: Array,
     links: Any
 });
 
-const PageRequest = Flight.defineEventType({
+const PageRequest = Fiber.defineEventType({
     pageUri: 'string'
 });
 
 const Events = {};
 
 Events.UserQuery = {};
-Events.UserQuery.Request = Flight.defineEvent(UserQuery, 'UserQuery:Request');
-Events.UserQuery.PageRequest = Flight.defineEvent(PageRequest, 'UserQuery:PageRequest');
-Events.UserQuery.Response = Flight.defineEvent(ItemsResponse, 'UserQuery:Response');
-Events.UserQuery.Error = Flight.defineEvent(ErrorResponse, 'UserQuery:Error');
+Events.UserQuery.Request = Fiber.defineEvent(UserQuery, 'UserQuery:Request');
+Events.UserQuery.PageRequest = Fiber.defineEvent(PageRequest, 'UserQuery:PageRequest');
+Events.UserQuery.Response = Fiber.defineEvent(ItemsResponse, 'UserQuery:Response');
+Events.UserQuery.Error = Fiber.defineEvent(ErrorResponse, 'UserQuery:Error');
 
 Events.User = {};
-Events.User.Chosen = Flight.defineEvent(UserEventType, 'User:Chosen');
+Events.User.Chosen = Fiber.defineEvent(UserEventType, 'User:Chosen');
 
 Events.Repositories = {};
-Events.Repositories.Request = Flight.defineEvent(UserEventType, 'Repositories:Request');
-Events.Repositories.PageRequest = Flight.defineEvent(PageRequest, 'Repositories:PageRequest');
-Events.Repositories.Response = Flight.defineEvent(ItemsResponse, 'Repositories:Response');
-Events.Repositories.Error = Flight.defineEvent(ErrorResponse, 'Repositories:Error');
+Events.Repositories.Request = Fiber.defineEvent(UserEventType, 'Repositories:Request');
+Events.Repositories.PageRequest = Fiber.defineEvent(PageRequest, 'Repositories:PageRequest');
+Events.Repositories.Response = Fiber.defineEvent(ItemsResponse, 'Repositories:Response');
+Events.Repositories.Error = Fiber.defineEvent(ErrorResponse, 'Repositories:Error');
 
 Events.Repository = {};
-Events.Repository.Chosen = Flight.defineEvent(RepositoryEventType, 'Repository:Chosen');
-Events.Repository.DetailsRequest = Flight.defineEvent(RepositoryEventType, 'Repository:DetailsRequest');
-Events.Repository.DetailsReady = Flight.defineEvent(RepositoryDetails, 'Repository:DetailsReady');
-Events.Repository.Error = Flight.defineEvent(ErrorResponse, 'Repository:Error');
+Events.Repository.Chosen = Fiber.defineEvent(RepositoryEventType, 'Repository:Chosen');
+Events.Repository.DetailsRequest = Fiber.defineEvent(RepositoryEventType, 'Repository:DetailsRequest');
+Events.Repository.DetailsReady = Fiber.defineEvent(RepositoryDetails, 'Repository:DetailsReady');
+Events.Repository.Error = Fiber.defineEvent(ErrorResponse, 'Repository:Error');
 
 import { ShowStepEvent, StepBackEvent } from 'FlowManager/events';
 Events.Flow = {};
