@@ -50,20 +50,6 @@ class GitHubComponent extends Fiber.DataComponent {
         });
     }
 
-    getRepositories(user) {
-        jquery.getJSON(
-            GITHUB_REPO_URL(user.login)
-        ).done(response => {
-            this.on(NameSpace.GitHub).trigger(
-                new Events.Repositories.Response(response)
-            );
-        }).fail(error => {
-            this.on(NameSpace.GitHub).trigger(
-                new Events.Repositories.Error(error, user)
-            );
-        });
-    }
-
     getRepository(repository) {
         const login = NameSpace.GitHub.state.currentUser.login;
         jquery.getJSON(
