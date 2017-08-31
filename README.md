@@ -3,9 +3,9 @@ Sample app to showcase and develop the Fiber framework.
 
 Online demo: https://github-repo-buzzer.herokuapp.com
 
-You can check out the framework here: https://github.com/jsbuzz/framework-concept
+You can check out the framework here: https://github.com/fiberjs/fiber-framework
 
-The flow-manager ui component is here: https://github.com/jsbuzz/3flight-flow-manager
+The flow-manager ui component is here: https://github.com/fiberjs/flow-manager
 
 # install
 clone and then the usual
@@ -34,7 +34,6 @@ http-server ./
 So you can see all your errors and test failures instantly.
 
 # todo
-- pagination of results and repos
 - dev and prod environments and configurations
 - minifying/gzipping in production
 - pre-compile the framework code so no need for webpack config
