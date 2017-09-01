@@ -21,7 +21,7 @@ const RepositoryDetails = Fiber.defineEventType({
 });
 
 const UserQuery = Fiber.defineEventType({
-    query: 'string'
+    query: String
 });
 
 const ItemsResponse = Fiber.defineEventType({
@@ -30,7 +30,7 @@ const ItemsResponse = Fiber.defineEventType({
 });
 
 const PageRequest = Fiber.defineEventType({
-    pageUri: 'string'
+    pageUri: String
 });
 
 const Events = {};
