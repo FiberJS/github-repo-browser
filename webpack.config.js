@@ -21,11 +21,6 @@ module.exports = {
         },
         {
           test: /\.js$/,
-          include: /node_modules\/fiber-framework/,
-          loader: 'babel-loader?presets[]=es2015'
-        },
-        {
-          test: /\.js$/,
           include: /node_modules\/PatchIt/,
           loader: 'babel-loader?presets[]=es2015'
         },
@@ -55,9 +50,10 @@ module.exports = {
         fs: "empty" // avoids error messages
     },
   resolve: {
+    symlinks: false,
     extensions: ['.scss', '.js', '.html'],
     alias: {
-      fiber: path.resolve(__dirname, 'node_modules/fiber-framework/src'),
+      fiber: path.resolve(__dirname, 'node_modules/fiber-framework'),
       PatchIt: path.resolve(__dirname, 'node_modules/patchit'),
       FlowManager: path.resolve(__dirname, 'node_modules/flow-manager/src'),
       components: path.resolve(__dirname, 'src/components'),
