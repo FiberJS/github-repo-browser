@@ -3,6 +3,8 @@ import PatchIt from 'patchit';
 import template from './paginated-list.html';
 import style from './paginated-list.scss';
 
+const PAGES = ['first', 'prev', 'next', 'last'];
+
 class PaginatedListComponent extends Fiber.UIComponent.withTemplate(template) {
 
     init(renderItem) {
@@ -12,18 +14,11 @@ class PaginatedListComponent extends Fiber.UIComponent.withTemplate(template) {
     listen() {
         PatchIt.assignVariables(this.view);
 
-        this.ui(this.view.$.first).listen(
-            'click', event => this.paginate(event, 'first')
-        );
-        this.ui(this.view.$.prev).listen(
-            'click', event => this.paginate(event, 'prev')
-        );
-        this.ui(this.view.$.next).listen(
-            'click', event => this.paginate(event, 'next')
-        );
-        this.ui(this.view.$.last).listen(
-            'click', event => this.paginate(event, 'last')
-        );
+        PAGES.forEach(page => {
+            this.ui(this.view.$[page]).listen(
+                'click', event => this.paginate(event, page)
+            );
+        });
     }
 
     loadingState() {
@@ -58,10 +53,9 @@ class PaginatedListComponent extends Fiber.UIComponent.withTemplate(template) {
     cleanUp() {
         this.view.$.list.className = '';
         this.view.$.list.innerHTML = '';
-        this.view.$.first.className = '';
-        this.view.$.prev.className = '';
-        this.view.$.next.className = '';
-        this.view.$.last.className = '';
+        PAGES.forEach( page => {
+            this.view.$[page].className = '';
+        })
     }
 }
 
