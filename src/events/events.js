@@ -1,37 +1,8 @@
 import Fiber from 'fiber';
-import Repository from 'domain/repository';
-import User from 'domain/user';
-
-const Any = 'any';
-const ErrorResponse = Fiber.defineEventType({
-    error: Any,
-    request: Any,
-});
-
-const UserEventType = Fiber.defineEventType({
-    user: User
-});
-
-const RepositoryEventType = Fiber.defineEventType({
-    repository: Repository
-});
-
-const RepositoryDetails = Fiber.defineEventType({
-    details: Object
-});
-
-const UserQuery = Fiber.defineEventType({
-    query: String
-});
-
-const ItemsResponse = Fiber.defineEventType({
-    items: Array,
-    links: Any
-});
-
-const PageRequest = Fiber.defineEventType({
-    pageUri: String
-});
+import {
+    ErrorResponse,UserEventType,RepositoryEventType,RepositoryDetails,
+    UserQuery,ItemsResponse,PageRequest
+} from './event-types';
 
 const Events = {};
 
