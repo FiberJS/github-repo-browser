@@ -18,11 +18,15 @@
   },
   "homepage": "https://github.com/fiberjs/github-repo-browser#readme",
   "dependencies": {
+    "axios": "^0.17.1",
     "babel-core": "^6.18.2",
     "babel-loader": "^7.1.1",
     "babel-preset-es2015": "^6.18.0",
     "css-loader": "^0.28.4",
+    "debounce": "^1.0.2",
     "extract-text-webpack-plugin": "^3.0.0",
+    "fiber-framework": "git+https://github.com/fiberjs/fiber-framework.git",
+    "flow-manager": "git+https://github.com/fiberjs/flow-manager.git",
     "html-loader": "^0.4.5",
     "http-server": "^0.10.0",
     "jasmine": "^2.6.0",
@@ -32,15 +36,11 @@
     "karma-expect": "^1.1.3",
     "karma-mocha": "^1.3.0",
     "karma-webpack": "^2.0.4",
+    "marked": "^0.3.6",
     "mocha": "^3.4.2",
     "node-sass": "^4.5.3",
-    "sass-loader": "^6.0.6",
-    "webpack": "^3.4.1",
     "patchit": "git+https://github.com/fiberjs/PatchIt.git",
-    "debounce": "^1.0.2",
-    "fiber-framework": "git+https://github.com/fiberjs/fiber-framework.git",
-    "flow-manager": "git+https://github.com/fiberjs/flow-manager.git",
-    "jquery": "^3.2.1",
-    "marked": "^0.3.6"
+    "sass-loader": "^6.0.6",
+    "webpack": "^3.4.1"
   }
 }

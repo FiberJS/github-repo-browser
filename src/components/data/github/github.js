@@ -1,7 +1,7 @@
 import Fiber from 'fiber';
 import NameSpace from 'namespace';
 import Events from 'events';
-import jquery from 'jquery';
+import axios from 'axios';
 
 // for working offline
 // import usersJson from './users.json';
@@ -34,16 +34,17 @@ class GitHubComponent extends Fiber.DataComponent {
     }
 
     processPage(pageUri, EventParent) {
-        jquery.getJSON(
+        axios.get(
             pageUri
-        ).done((data, status, response) => {
-            const links = parseLinks(response.getResponseHeader('Link'));
+        ).then(response => {
+            const { data } = response;
+            const links = parseLinks(response.headers['link']);
             this.on(NameSpace.GitHub).trigger(
                 new EventParent.Response(
                     data instanceof Array ? data : data.items, links
                 )
             );
-        }).fail(error => {
+        }).catch(error => {
             this.on(NameSpace.GitHub).trigger(
                 new EventParent.Error(error, pageUri)
             );
@@ -52,27 +53,27 @@ class GitHubComponent extends Fiber.DataComponent {
 
     getRepository(repository) {
         const login = NameSpace.GitHub.state.currentUser.login;
-        jquery.getJSON(
+        axios.get(
             GITHUB_README_URL(login, repository.name)
-        ).done(response => {
-            jquery
-            .get(response.download_url)
-            .done(response => {
+        ).then(response => {
+            axios
+            .get(response.data.download_url, {
+                responseType: 'text'
+            }).then(readmeResponse => {
                 this.on(NameSpace.GitHub).trigger(
                     new Events.Repository.DetailsReady({
                         name: repository.name,
-                        readme: response || MISSING_README(repository.name),
+                        readme: readmeResponse.data || MISSING_README(repository.name),
                     })
                 );
-            })
-            .fail(response => {
+            }).catch(error => {
                 this.on(NameSpace.GitHub).trigger(
                     new Events.Repository.Error(error, user)
                 );
             })
 
-        }).fail(error => {
-            if(error.status == 404) {
+        }).catch(error => {
+            if(error.response.status == 404) {
                 this.on(NameSpace.GitHub).trigger(
                     new Events.Repository.DetailsReady({
                         name: repository.name,

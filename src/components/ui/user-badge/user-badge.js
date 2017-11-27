@@ -1,10 +1,8 @@
 import Fiber from 'fiber';
 import NameSpace from 'namespace';
 import Events from 'events';
-import jquery from 'jquery';
 import template from './user-badge.html';
 import styles from './user-badge.scss';
-const $ = jquery;
 
 
 class UserBadgeComponent extends Fiber.UIComponent.withTemplate(template) {
@@ -20,8 +18,8 @@ class UserBadgeComponent extends Fiber.UIComponent.withTemplate(template) {
     }
 
     loadUser(user) {
-        $('img', this.view).attr('src', user.avatar_url);
-        $('user-name', this.view).html('@' + user.login);
+        this.view.querySelector('img').src = user.avatar_url;
+        this.view.querySelector('user-name').innerHTML = '@' + user.login
     }
 
     stepBack() {
