@@ -7,10 +7,10 @@ import jquery from 'jquery';
 // import usersJson from './users.json';
 // import reposJson from './repos.json';
 
-const GITHUB_SEARCH_URL = (query) => `https://api.github.com/search/users?q=${query}`;
-const GITHUB_REPO_URL = (user) => `https://api.github.com/users/${user}/repos`;
-const GITHUB_README_URL = (user, repo) => `https://api.github.com/repos/${user}/${repo}/readme`;
-const MISSING_README = (repoName) => `# ${repoName}\n-- No information provided --`;
+export const GITHUB_SEARCH_URL = (query) => `https://api.github.com/search/users?q=${query}`;
+export const GITHUB_REPO_URL = (user) => `https://api.github.com/users/${user}/repos`;
+export const GITHUB_README_URL = (user, repo) => `https://api.github.com/repos/${user}/${repo}/readme`;
+export const MISSING_README = (repoName) => `# ${repoName}\n-- No information provided --`;
 
 class GitHubComponent extends Fiber.DataComponent {
 

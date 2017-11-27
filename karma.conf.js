@@ -71,7 +71,7 @@ module.exports = function(config) {
       resolve: {
         extensions: ['.scss', '.js', '.html'],
         alias: {
-          fiber: path.resolve(__dirname, 'node_modules/framework-concept/src'),
+          fiber: path.resolve(__dirname, 'node_modules/fiber-framework'),
           PatchIt: path.resolve(__dirname, 'node_modules/PatchIt'),
           FlowManager: path.resolve(__dirname, 'node_modules/flow-manager/src'),
           components: path.resolve(__dirname, 'src/components'),
