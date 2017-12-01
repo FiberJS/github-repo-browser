@@ -72,7 +72,7 @@ describe('GitHubComponent', () => {
                     });
                 });
 
-                it("should respond with " + Response.EventName, () => {
+                it("should respond with " + Success.EventName, () => {
                     expect(successEvent).not.to.be(null);
                 });
 

@@ -9,6 +9,7 @@ export class PaginatedListComponent extends Fiber.UIComponent.withTemplate(templ
 
     init(renderItem) {
         this.renderItem = renderItem;
+        this.pages = null;
     }
 
     listen() {
@@ -43,6 +44,9 @@ export class PaginatedListComponent extends Fiber.UIComponent.withTemplate(templ
 
     paginate(event, page) {
         event.preventDefault();
+        if(!this.pages || !this.pages[page]) {
+            return ;
+        }
         this.ui().trigger(
             new PaginatedListComponent.Events.PageEvent(
                 page, this.pages[page]
