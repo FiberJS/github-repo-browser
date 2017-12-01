@@ -5,7 +5,7 @@ import style from './paginated-list.scss';
 
 const PAGES = ['first', 'prev', 'next', 'last'];
 
-class PaginatedListComponent extends Fiber.UIComponent.withTemplate(template) {
+export class PaginatedListComponent extends Fiber.UIComponent.withTemplate(template) {
 
     init(renderItem) {
         this.renderItem = renderItem;
